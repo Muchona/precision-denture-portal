@@ -163,7 +163,7 @@ export default function Contact() {
                   loading="lazy" 
                   allowFullScreen 
                   referrerPolicy="no-referrer-when-downgrade" 
-                  src="https://maps.google.com/maps?q=Precision+Dental+Services,+37+Glaslough+Street,+Monaghan,+Ireland&t=&z=16&ie=UTF8&iwloc=&output=embed">
+                  src="https://maps.google.com/maps?q=37+Glaslough+Street,+Monaghan,+Ireland+(Precision+Dental+Services)&t=&z=16&ie=UTF8&iwloc=&output=embed">
                 </iframe>
               </div>
             </div>
