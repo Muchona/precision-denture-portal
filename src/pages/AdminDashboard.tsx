@@ -87,7 +87,7 @@ export default function AdminDashboard() {
   );
 
   return (
-    <div className="min-h-screen bg-surface-dark flex flex-col">
+    <div className="min-h-screen bg-slate-50 flex flex-col">
       <AdminNavbar />
       
       <main className="flex-1 p-6 lg:p-10">
@@ -95,29 +95,29 @@ export default function AdminDashboard() {
           
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
             <div>
-              <h1 className="text-3xl font-bold text-white mb-2">Global Orders</h1>
-              <p className="text-gray-400">Manage all incoming manufacturing requests.</p>
+              <h1 className="text-3xl font-bold text-slate-800 mb-2">Global Orders</h1>
+              <p className="text-slate-500">Manage all incoming manufacturing requests.</p>
             </div>
             
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <Search className="h-5 w-5 text-gray-500" />
+                <Search className="h-5 w-5 text-slate-400" />
               </div>
               <input
                 type="text"
                 placeholder="Search by clinic, ref, or ID..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 pr-4 py-2 bg-surface-card border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-500/50 w-full md:w-80"
+                className="pl-10 pr-4 py-2 bg-white border border-slate-200 rounded-xl text-slate-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-500/50 w-full md:w-80"
               />
             </div>
           </div>
 
-          <div className="apple-glass rounded-2xl overflow-hidden border border-white/10">
+          <div className="apple-glass rounded-2xl overflow-hidden border border-slate-200">
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
-                  <tr className="bg-white/5 border-b border-white/10 text-xs uppercase tracking-wider text-gray-400 font-bold">
+                  <tr className="bg-slate-50 border-b border-slate-200 text-xs uppercase tracking-wider text-slate-500 font-bold">
                     <th className="p-4 pl-6">Order ID</th>
                     <th className="p-4">Clinic</th>
                     <th className="p-4">Patient Ref</th>
@@ -130,7 +130,7 @@ export default function AdminDashboard() {
                 <tbody className="divide-y divide-white/5">
                   {filteredOrders.length === 0 ? (
                     <tr>
-                      <td colSpan={7} className="p-8 text-center text-gray-400">
+                      <td colSpan={7} className="p-8 text-center text-slate-500">
                         No orders found matching your search.
                       </td>
                     </tr>
@@ -139,19 +139,19 @@ export default function AdminDashboard() {
                       <React.Fragment key={order.id}>
                         <tr 
                           onClick={() => setExpandedOrderId(expandedOrderId === order.id ? null : order.id)}
-                          className="hover:bg-white/5 transition-colors cursor-pointer group"
+                          className="hover:bg-slate-50 transition-colors cursor-pointer group"
                         >
-                          <td className="p-4 pl-6 font-medium text-white">
+                          <td className="p-4 pl-6 font-medium text-slate-800">
                             <div className="flex items-center gap-3">
-                              <ChevronDown className={`w-4 h-4 text-gray-500 transition-transform duration-200 ${expandedOrderId === order.id ? 'rotate-180 text-primary-500' : 'group-hover:text-primary-400'}`} />
+                              <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform duration-200 ${expandedOrderId === order.id ? 'rotate-180 text-primary-500' : 'group-hover:text-primary-400'}`} />
                               {order.id.split('-')[0].toUpperCase()}
                             </div>
                           </td>
-                          <td className="p-4 text-gray-300">{order.profiles?.business_name || 'Unknown Clinic'}</td>
-                          <td className="p-4 text-gray-300">{order.patient_ref}</td>
-                          <td className="p-4 text-gray-300">{order.material}</td>
+                          <td className="p-4 text-slate-600">{order.profiles?.business_name || 'Unknown Clinic'}</td>
+                          <td className="p-4 text-slate-600">{order.patient_ref}</td>
+                          <td className="p-4 text-slate-600">{order.material}</td>
                           <td className="p-4">
-                            <div className="flex items-center gap-2 text-gray-400 text-sm">
+                            <div className="flex items-center gap-2 text-slate-500 text-sm">
                               <Calendar className="w-4 h-4" />
                               {new Date(order.created_at).toLocaleDateString()}
                             </div>
@@ -167,9 +167,9 @@ export default function AdminDashboard() {
                                   'bg-yellow-500/10 text-yellow-400 border-yellow-500/20 hover:bg-yellow-500/20'
                                 }`}
                               >
-                                <option value="Pending" className="bg-surface-dark text-white">Pending</option>
-                                <option value="In Production" className="bg-surface-dark text-white">In Production</option>
-                                <option value="Completed" className="bg-surface-dark text-white">Completed</option>
+                                <option value="Pending" className="bg-slate-50 text-slate-800">Pending</option>
+                                <option value="In Production" className="bg-slate-50 text-slate-800">In Production</option>
+                                <option value="Completed" className="bg-slate-50 text-slate-800">Completed</option>
                               </select>
                               <div className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none">
                                 <ChevronDown className="w-3 h-3 text-current opacity-70" />
@@ -188,7 +188,7 @@ export default function AdminDashboard() {
                               <button 
                                 onClick={() => setOrderToDelete(order)}
                                 title="Delete Order"
-                                className="w-8 h-8 rounded-lg border border-transparent hover:border-red-500/50 hover:bg-red-500/10 flex items-center justify-center text-gray-500 hover:text-red-400 transition-colors"
+                                className="w-8 h-8 rounded-lg border border-transparent hover:border-red-500/50 hover:bg-red-500/10 flex items-center justify-center text-slate-400 hover:text-red-400 transition-colors"
                               >
                                 <Trash2 className="w-4 h-4" />
                               </button>
@@ -198,35 +198,35 @@ export default function AdminDashboard() {
                         
                         {/* Expanded Details Row */}
                         {expandedOrderId === order.id && (
-                          <tr className="bg-black/20 border-b border-white/5">
+                          <tr className="bg-slate-50 border-b border-slate-100">
                             <td colSpan={7} className="p-0">
                               <div className="p-6 pl-14 animate-in slide-in-from-top-2 fade-in duration-200">
                                 <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                                   
                                   {/* Notes Section */}
-                                  <div className="md:col-span-2 bg-surface-dark p-4 rounded-xl border border-white/5">
-                                    <p className="text-xs text-gray-500 uppercase tracking-wider font-bold mb-2">Message from Client</p>
-                                    <p className="text-sm text-gray-300 whitespace-pre-wrap">{order.notes || 'No additional notes provided.'}</p>
+                                  <div className="md:col-span-2 bg-slate-50 p-4 rounded-xl border border-slate-100">
+                                    <p className="text-xs text-slate-400 uppercase tracking-wider font-bold mb-2">Message from Client</p>
+                                    <p className="text-sm text-slate-600 whitespace-pre-wrap">{order.notes || 'No additional notes provided.'}</p>
                                   </div>
                                   
                                   {/* Manufacturing Details */}
-                                  <div className="bg-surface-dark p-4 rounded-xl border border-white/5">
-                                    <p className="text-xs text-gray-500 uppercase tracking-wider font-bold mb-2">Manufacturing</p>
+                                  <div className="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                                    <p className="text-xs text-slate-400 uppercase tracking-wider font-bold mb-2">Manufacturing</p>
                                     <div className="space-y-2">
                                       <div className="flex justify-between text-sm">
-                                        <span className="text-gray-500">Shade:</span>
-                                        <span className="text-white font-medium">{order.shade || 'N/A'}</span>
+                                        <span className="text-slate-400">Shade:</span>
+                                        <span className="text-slate-800 font-medium">{order.shade || 'N/A'}</span>
                                       </div>
                                       <div className="flex justify-between text-sm">
-                                        <span className="text-gray-500">Delivery:</span>
-                                        <span className="text-white font-medium text-right">{order.delivery_method || 'N/A'}</span>
+                                        <span className="text-slate-400">Delivery:</span>
+                                        <span className="text-slate-800 font-medium text-right">{order.delivery_method || 'N/A'}</span>
                                       </div>
                                     </div>
                                   </div>
                                   
                                   {/* Teeth Section */}
-                                  <div className="bg-surface-dark p-4 rounded-xl border border-white/5">
-                                    <p className="text-xs text-gray-500 uppercase tracking-wider font-bold mb-2">Teeth Selected</p>
+                                  <div className="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                                    <p className="text-xs text-slate-400 uppercase tracking-wider font-bold mb-2">Teeth Selected</p>
                                     <div className="flex flex-wrap gap-2">
                                       {order.teeth && order.teeth.length > 0 ? (
                                         order.teeth.map((t: number) => (
@@ -235,7 +235,7 @@ export default function AdminDashboard() {
                                           </span>
                                         ))
                                       ) : (
-                                        <span className="text-sm text-gray-500">None selected</span>
+                                        <span className="text-sm text-slate-400">None selected</span>
                                       )}
                                     </div>
                                   </div>
@@ -259,16 +259,16 @@ export default function AdminDashboard() {
       {/* Confirmation Modal */}
       {orderToDelete && (
         <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setOrderToDelete(null)}></div>
-          <div className="relative bg-surface-card border border-white/10 rounded-2xl p-6 w-full max-w-md shadow-2xl animate-in fade-in zoom-in-95 duration-200">
-            <h3 className="text-xl font-bold text-white mb-2">Delete Order?</h3>
-            <p className="text-gray-400 text-sm mb-6">
+          <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm" onClick={() => setOrderToDelete(null)}></div>
+          <div className="relative bg-white border border-slate-200 rounded-2xl p-6 w-full max-w-md shadow-2xl animate-in fade-in zoom-in-95 duration-200">
+            <h3 className="text-xl font-bold text-slate-800 mb-2">Delete Order?</h3>
+            <p className="text-slate-500 text-sm mb-6">
               Are you sure you want to permanently delete order <strong>{orderToDelete.id.split('-')[0].toUpperCase()}</strong> from {orderToDelete.profiles?.business_name}? This cannot be undone.
             </p>
             <div className="flex gap-3">
               <button 
                 onClick={() => setOrderToDelete(null)}
-                className="flex-1 px-4 py-2 bg-surface-dark border border-white/10 text-white rounded-xl text-sm font-medium hover:bg-white/5 transition-colors"
+                className="flex-1 px-4 py-2 bg-slate-50 border border-slate-200 text-slate-800 rounded-xl text-sm font-medium hover:bg-slate-50 transition-colors"
               >
                 Cancel
               </button>

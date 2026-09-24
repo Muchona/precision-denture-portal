@@ -77,21 +77,21 @@ export default function AdminSettings() {
   };
 
   return (
-    <div className="min-h-screen bg-surface-dark flex flex-col font-sans">
+    <div className="min-h-screen bg-white flex flex-col font-sans">
       <AdminNavbar />
       
       <main className="flex-1 p-6 lg:p-10 flex items-center justify-center">
-        <div className="w-full max-w-4xl apple-glass rounded-3xl overflow-hidden shadow-2xl border border-white/10">
+        <div className="w-full max-w-4xl apple-glass rounded-3xl overflow-hidden shadow-2xl border border-slate-200">
           
-          <div className="px-8 py-6 border-b border-white/5 flex items-center justify-between bg-black/20">
+          <div className="px-8 py-6 border-b border-slate-200 flex items-center justify-between bg-slate-100/50">
             <div>
               <h1 className="text-2xl font-bold text-white mb-1">Admin Settings</h1>
-              <p className="text-sm text-gray-400">Manage your administrative profile and security credentials.</p>
+              <p className="text-sm text-slate-500">Manage your administrative profile and security credentials.</p>
             </div>
           </div>
 
           <form onSubmit={handleSave} className="p-8 sm:p-10">
-            <h2 className="text-xl font-bold text-white mb-8 flex items-center gap-3">
+            <h2 className="text-xl font-bold text-slate-800 mb-8 flex items-center gap-3">
               <div className="w-10 h-10 bg-primary-500/10 rounded-full flex items-center justify-center">
                 <User className="w-5 h-5 text-primary-500" />
               </div>
@@ -102,55 +102,55 @@ export default function AdminSettings() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                 
                 <div className="space-y-3">
-                  <label className="text-xs font-bold text-gray-400 uppercase tracking-wider block">First Name</label>
+                  <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block">First Name</label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                      <User className="h-5 w-5 text-gray-500" />
+                      <User className="h-5 w-5 text-slate-500" />
                     </div>
                     <input
                       type="text"
                       value={firstName}
                       onChange={(e) => setFirstName(e.target.value)}
                       required
-                      className="w-full pl-12 pr-4 py-3.5 bg-surface-dark border border-white/10 rounded-xl text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-primary-500/50 transition-all text-sm"
+                      className="w-full pl-12 pr-4 py-3.5 bg-white border border-slate-200 rounded-xl text-slate-800 placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-primary-500/50 transition-all text-sm"
                     />
                   </div>
                 </div>
 
                 <div className="space-y-3">
-                  <label className="text-xs font-bold text-gray-400 uppercase tracking-wider block">Last Name</label>
+                  <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block">Last Name</label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                      <User className="h-5 w-5 text-gray-500" />
+                      <User className="h-5 w-5 text-slate-500" />
                     </div>
                     <input
                       type="text"
                       value={lastName}
                       onChange={(e) => setLastName(e.target.value)}
                       required
-                      className="w-full pl-12 pr-4 py-3.5 bg-surface-dark border border-white/10 rounded-xl text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-primary-500/50 transition-all text-sm"
+                      className="w-full pl-12 pr-4 py-3.5 bg-white border border-slate-200 rounded-xl text-slate-800 placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-primary-500/50 transition-all text-sm"
                     />
                   </div>
                 </div>
 
                 <div className="space-y-3 sm:col-span-2">
-                  <label className="text-xs font-bold text-gray-400 uppercase tracking-wider block">Phone Number</label>
+                  <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block">Phone Number</label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                      <Phone className="h-5 w-5 text-gray-500" />
+                      <Phone className="h-5 w-5 text-slate-500" />
                     </div>
                     <input
                       type="tel"
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
-                      className="w-full pl-12 pr-4 py-3.5 bg-surface-dark border border-white/10 rounded-xl text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-primary-500/50 transition-all text-sm"
+                      className="w-full pl-12 pr-4 py-3.5 bg-white border border-slate-200 rounded-xl text-slate-800 placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-primary-500/50 transition-all text-sm"
                     />
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="mt-10 pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-end gap-4">
+            <div className="mt-10 pt-8 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-end gap-4">
               <button
                 type="submit"
                 disabled={isSaving}
@@ -163,8 +163,8 @@ export default function AdminSettings() {
           </form>
 
           {/* Account Security Form */}
-          <form onSubmit={handleSecuritySave} className="p-8 sm:p-10 border-t border-white/5 bg-black/20">
-            <h2 className="text-xl font-bold text-white mb-8 flex items-center gap-3">
+          <form onSubmit={handleSecuritySave} className="p-8 sm:p-10 border-t border-slate-200 bg-slate-100/50">
+            <h2 className="text-xl font-bold text-slate-800 mb-8 flex items-center gap-3">
               <div className="w-10 h-10 bg-red-500/10 rounded-full flex items-center justify-center">
                 <Lock className="w-5 h-5 text-red-500" />
               </div>
@@ -174,33 +174,33 @@ export default function AdminSettings() {
             <div className="space-y-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                 <div className="space-y-3">
-                  <label className="text-xs font-bold text-gray-400 uppercase tracking-wider block">Email Address</label>
+                  <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block">Email Address</label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                      <Mail className="h-5 w-5 text-gray-500" />
+                      <Mail className="h-5 w-5 text-slate-500" />
                     </div>
                     <input
                       type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       required
-                      className="w-full pl-12 pr-4 py-3.5 bg-surface-dark border border-white/10 rounded-xl text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-primary-500/50 transition-all text-sm"
+                      className="w-full pl-12 pr-4 py-3.5 bg-white border border-slate-200 rounded-xl text-slate-800 placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-primary-500/50 transition-all text-sm"
                     />
                   </div>
                 </div>
 
                 <div className="space-y-3">
-                  <label className="text-xs font-bold text-gray-400 uppercase tracking-wider block">New Password</label>
+                  <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block">New Password</label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                      <Lock className="h-5 w-5 text-gray-500" />
+                      <Lock className="h-5 w-5 text-slate-500" />
                     </div>
                     <input
                       type="password"
                       value={newPassword}
                       onChange={(e) => setNewPassword(e.target.value)}
                       minLength={6}
-                      className="w-full pl-12 pr-4 py-3.5 bg-surface-dark border border-white/10 rounded-xl text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-primary-500/50 transition-all text-sm"
+                      className="w-full pl-12 pr-4 py-3.5 bg-white border border-slate-200 rounded-xl text-slate-800 placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-primary-500/50 transition-all text-sm"
                       placeholder="Leave blank to keep current"
                     />
                   </div>
@@ -208,8 +208,8 @@ export default function AdminSettings() {
               </div>
             </div>
 
-            <div className="mt-10 pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4">
-              <p className="text-sm text-gray-500">Updating your email will require verification.</p>
+            <div className="mt-10 pt-8 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <p className="text-sm text-slate-500">Updating your email will require verification.</p>
               <button
                 type="submit"
                 disabled={isSavingSecurity}

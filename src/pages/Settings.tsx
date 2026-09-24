@@ -143,30 +143,30 @@ export default function Settings() {
   };
 
   return (
-    <div className="min-h-screen bg-surface-dark flex flex-col font-sans">
+    <div className="min-h-screen bg-white flex flex-col font-sans">
       <Navbar />
 
       <main className="flex-1 max-w-4xl w-full mx-auto px-4 sm:px-6 py-12">
         <div className="mb-10 text-center sm:text-left">
-          <h1 className="text-3xl font-bold text-white mb-3">Clinic Details</h1>
-          <p className="text-gray-400 text-lg">Manage your dental practice information. These details will automatically fill when placing new orders.</p>
+          <h1 className="text-3xl font-bold text-slate-800 mb-3">Clinic Details</h1>
+          <p className="text-slate-500 text-lg">Manage your dental practice information. These details will automatically fill when placing new orders.</p>
         </div>
 
         <div className="apple-glass rounded-3xl overflow-hidden relative">
           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary-600 to-primary-400"></div>
 
           <form onSubmit={handleSave} className="p-8 sm:p-10">
-            <div className="flex flex-col sm:flex-row items-center gap-8 mb-10 pb-10 border-b border-white/5">
+            <div className="flex flex-col sm:flex-row items-center gap-8 mb-10 pb-10 border-b border-slate-200">
               <div className="relative group">
-                <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-surface-dark shadow-[0_0_20px_rgba(34,197,94,0.1)] bg-surface-dark flex items-center justify-center relative">
+                <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-surface-dark shadow-[0_0_20px_rgba(34,197,94,0.1)] bg-white flex items-center justify-center relative">
                   {avatarUrl ? (
                     <img src={avatarUrl} alt="Avatar" className="w-full h-full object-cover" />
                   ) : (
-                    <User className="w-12 h-12 text-gray-500" />
+                    <User className="w-12 h-12 text-slate-500" />
                   )}
                   <div 
                     onClick={() => fileInputRef.current?.click()}
-                    className="absolute inset-0 bg-black/60 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+                    className="absolute inset-0 bg-slate-900/60 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
                   >
                     <UploadCloud className="w-6 h-6 text-white mb-1" />
                     <span className="text-[10px] font-bold text-white uppercase tracking-wider">Change</span>
@@ -181,20 +181,20 @@ export default function Settings() {
                 />
               </div>
               <div className="text-center sm:text-left">
-                <h3 className="text-lg font-bold text-white">Profile Picture</h3>
-                <p className="text-sm text-gray-400 mt-1 mb-3">Upload a high-res image. Max size 2MB.</p>
+                <h3 className="text-lg font-bold text-slate-800">Profile Picture</h3>
+                <p className="text-sm text-slate-500 mt-1 mb-3">Upload a high-res image. Max size 2MB.</p>
                 <button 
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
                   disabled={isUploading}
-                  className="px-4 py-2 bg-white/5 hover:bg-white/10 text-white text-sm font-medium rounded-lg transition-colors border border-white/10"
+                  className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-medium rounded-lg transition-colors border border-slate-200"
                 >
                   {isUploading ? 'Uploading...' : 'Upload Image'}
                 </button>
               </div>
             </div>
 
-            <h2 className="text-xl font-bold text-white mb-8 flex items-center gap-3">
+            <h2 className="text-xl font-bold text-slate-800 mb-8 flex items-center gap-3">
               <div className="w-10 h-10 bg-primary-500/10 rounded-full flex items-center justify-center">
                 <Building2 className="w-5 h-5 text-primary-500" />
               </div>
@@ -204,129 +204,129 @@ export default function Settings() {
             <div className="space-y-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                 <div className="space-y-3 sm:col-span-2">
-                  <label className="text-xs font-bold text-gray-400 uppercase tracking-wider block">Clinic/Company Name</label>
+                  <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block">Clinic/Company Name</label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                      <Building2 className="h-5 w-5 text-gray-500" />
+                      <Building2 className="h-5 w-5 text-slate-500" />
                     </div>
                     <input
                       type="text"
                       value={businessName}
                       onChange={(e) => setBusinessName(e.target.value)}
-                      className="w-full pl-12 pr-4 py-3.5 bg-surface-dark border border-white/10 rounded-xl text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-primary-500/50 transition-all text-sm"
+                      className="w-full pl-12 pr-4 py-3.5 bg-white border border-slate-200 rounded-xl text-slate-800 placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-primary-500/50 transition-all text-sm"
                       placeholder="e.g. City Center Dental"
                     />
                   </div>
                 </div>
 
                 <div className="space-y-3">
-                  <label className="text-xs font-bold text-gray-400 uppercase tracking-wider block">First Name</label>
+                  <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block">First Name</label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                      <User className="h-5 w-5 text-gray-500" />
+                      <User className="h-5 w-5 text-slate-500" />
                     </div>
                     <input
                       type="text"
                       value={firstName}
                       onChange={(e) => setFirstName(e.target.value)}
-                      className="w-full pl-12 pr-4 py-3.5 bg-surface-dark border border-white/10 rounded-xl text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-primary-500/50 transition-all text-sm"
+                      className="w-full pl-12 pr-4 py-3.5 bg-white border border-slate-200 rounded-xl text-slate-800 placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-primary-500/50 transition-all text-sm"
                       placeholder="e.g. Jane"
                     />
                   </div>
                 </div>
 
                 <div className="space-y-3">
-                  <label className="text-xs font-bold text-gray-400 uppercase tracking-wider block">Last Name</label>
+                  <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block">Last Name</label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                      <User className="h-5 w-5 text-gray-500" />
+                      <User className="h-5 w-5 text-slate-500" />
                     </div>
                     <input
                       type="text"
                       value={lastName}
                       onChange={(e) => setLastName(e.target.value)}
-                      className="w-full pl-12 pr-4 py-3.5 bg-surface-dark border border-white/10 rounded-xl text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-primary-500/50 transition-all text-sm"
+                      className="w-full pl-12 pr-4 py-3.5 bg-white border border-slate-200 rounded-xl text-slate-800 placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-primary-500/50 transition-all text-sm"
                       placeholder="e.g. Smith"
                     />
                   </div>
                 </div>
 
                 <div className="space-y-3 sm:col-span-2">
-                  <label className="text-xs font-bold text-gray-400 uppercase tracking-wider block">Phone Number</label>
+                  <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block">Phone Number</label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                      <Phone className="h-5 w-5 text-gray-500" />
+                      <Phone className="h-5 w-5 text-slate-500" />
                     </div>
                     <input
                       type="tel"
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
                       required
-                      className="w-full pl-12 pr-4 py-3.5 bg-surface-dark border border-white/10 rounded-xl text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-primary-500/50 transition-all text-sm"
+                      className="w-full pl-12 pr-4 py-3.5 bg-white border border-slate-200 rounded-xl text-slate-800 placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-primary-500/50 transition-all text-sm"
                       placeholder="e.g. 089 123 4567"
                     />
                   </div>
                 </div>
 
                 <div className="space-y-3 sm:col-span-2">
-                  <label className="text-xs font-bold text-gray-400 uppercase tracking-wider block">Street Address</label>
+                  <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block">Street Address</label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                      <MapPin className="h-5 w-5 text-gray-500" />
+                      <MapPin className="h-5 w-5 text-slate-500" />
                     </div>
                     <input
                       type="text"
                       value={addressLine1}
                       onChange={(e) => setAddressLine1(e.target.value)}
-                      className="w-full pl-12 pr-4 py-3.5 bg-surface-dark border border-white/10 rounded-xl text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-primary-500/50 transition-all text-sm"
+                      className="w-full pl-12 pr-4 py-3.5 bg-white border border-slate-200 rounded-xl text-slate-800 placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-primary-500/50 transition-all text-sm"
                       placeholder="e.g. 123 Dental Way"
                     />
                   </div>
                 </div>
 
                 <div className="space-y-3">
-                  <label className="text-xs font-bold text-gray-400 uppercase tracking-wider block">City / County</label>
+                  <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block">City / County</label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                      <MapPin className="h-5 w-5 text-gray-500" />
+                      <MapPin className="h-5 w-5 text-slate-500" />
                     </div>
                     <input
                       type="text"
                       value={city}
                       onChange={(e) => setCity(e.target.value)}
-                      className="w-full pl-12 pr-4 py-3.5 bg-surface-dark border border-white/10 rounded-xl text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-primary-500/50 transition-all text-sm"
+                      className="w-full pl-12 pr-4 py-3.5 bg-white border border-slate-200 rounded-xl text-slate-800 placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-primary-500/50 transition-all text-sm"
                       placeholder="e.g. Dublin"
                     />
                   </div>
                 </div>
 
                 <div className="space-y-3">
-                  <label className="text-xs font-bold text-gray-400 uppercase tracking-wider block">Eircode</label>
+                  <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block">Eircode</label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                      <MapPin className="h-5 w-5 text-gray-500" />
+                      <MapPin className="h-5 w-5 text-slate-500" />
                     </div>
                     <input
                       type="text"
                       value={postalCode}
                       onChange={(e) => setPostalCode(e.target.value)}
-                      className="w-full pl-12 pr-4 py-3.5 bg-surface-dark border border-white/10 rounded-xl text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-primary-500/50 transition-all text-sm"
+                      className="w-full pl-12 pr-4 py-3.5 bg-white border border-slate-200 rounded-xl text-slate-800 placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-primary-500/50 transition-all text-sm"
                       placeholder="e.g. D01 X2Y3"
                     />
                   </div>
                 </div>
 
                 <div className="space-y-3 sm:col-span-2">
-                  <label className="text-xs font-bold text-gray-400 uppercase tracking-wider block">VAT Number</label>
+                  <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block">VAT Number</label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                      <CreditCard className="h-5 w-5 text-gray-500" />
+                      <CreditCard className="h-5 w-5 text-slate-500" />
                     </div>
                     <input
                       type="text"
                       value={vatNumber}
                       onChange={(e) => setVatNumber(e.target.value)}
-                      className="w-full pl-12 pr-4 py-3.5 bg-surface-dark border border-white/10 rounded-xl text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-primary-500/50 transition-all text-sm"
+                      className="w-full pl-12 pr-4 py-3.5 bg-white border border-slate-200 rounded-xl text-slate-800 placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-primary-500/50 transition-all text-sm"
                       placeholder="e.g. IE1234567T"
                     />
                   </div>
@@ -334,8 +334,8 @@ export default function Settings() {
               </div>
             </div>
 
-            <div className="mt-10 pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4">
-              <p className="text-sm text-gray-500">Your details are securely stored and encrypted.</p>
+            <div className="mt-10 pt-8 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <p className="text-sm text-slate-500">Your details are securely stored and encrypted.</p>
               <button
                 type="submit"
                 disabled={isSaving}
@@ -348,8 +348,8 @@ export default function Settings() {
           </form>
 
           {/* Account Security Form */}
-          <form onSubmit={handleSecuritySave} className="p-8 sm:p-10 border-t border-white/5 bg-black/20">
-            <h2 className="text-xl font-bold text-white mb-8 flex items-center gap-3">
+          <form onSubmit={handleSecuritySave} className="p-8 sm:p-10 border-t border-slate-200 bg-slate-100/50">
+            <h2 className="text-xl font-bold text-slate-800 mb-8 flex items-center gap-3">
               <div className="w-10 h-10 bg-red-500/10 rounded-full flex items-center justify-center">
                 <Lock className="w-5 h-5 text-red-500" />
               </div>
@@ -359,34 +359,34 @@ export default function Settings() {
             <div className="space-y-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                 <div className="space-y-3">
-                  <label className="text-xs font-bold text-gray-400 uppercase tracking-wider block">Email Address</label>
+                  <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block">Email Address</label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                      <Mail className="h-5 w-5 text-gray-500" />
+                      <Mail className="h-5 w-5 text-slate-500" />
                     </div>
                     <input
                       type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       required
-                      className="w-full pl-12 pr-4 py-3.5 bg-surface-dark border border-white/10 rounded-xl text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-primary-500/50 transition-all text-sm"
+                      className="w-full pl-12 pr-4 py-3.5 bg-white border border-slate-200 rounded-xl text-slate-800 placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-primary-500/50 transition-all text-sm"
                       placeholder="e.g. doctor@clinic.com"
                     />
                   </div>
                 </div>
 
                 <div className="space-y-3">
-                  <label className="text-xs font-bold text-gray-400 uppercase tracking-wider block">New Password</label>
+                  <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block">New Password</label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                      <Lock className="h-5 w-5 text-gray-500" />
+                      <Lock className="h-5 w-5 text-slate-500" />
                     </div>
                     <input
                       type="password"
                       value={newPassword}
                       onChange={(e) => setNewPassword(e.target.value)}
                       minLength={6}
-                      className="w-full pl-12 pr-4 py-3.5 bg-surface-dark border border-white/10 rounded-xl text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-primary-500/50 transition-all text-sm"
+                      className="w-full pl-12 pr-4 py-3.5 bg-white border border-slate-200 rounded-xl text-slate-800 placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-primary-500/50 transition-all text-sm"
                       placeholder="Leave blank to keep current"
                     />
                   </div>
@@ -394,8 +394,8 @@ export default function Settings() {
               </div>
             </div>
 
-            <div className="mt-10 pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4">
-              <p className="text-sm text-gray-500">Updating your email will require verification.</p>
+            <div className="mt-10 pt-8 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <p className="text-sm text-slate-500">Updating your email will require verification.</p>
               <button
                 type="submit"
                 disabled={isSavingSecurity}
