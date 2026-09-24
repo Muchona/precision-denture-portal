@@ -1,4 +1,3 @@
-import { useRef } from 'react';
 import { Image as ImageIcon } from 'lucide-react';
 import { motion, useScroll, useVelocity, useTransform, useSpring } from 'framer-motion';
 import FadeIn from '../../components/FadeIn';
@@ -55,20 +54,20 @@ export default function Gallery() {
       <section className="py-16 lg:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[1, 2, 3, 4, 5, 6].map((index) => (
-              <FadeIn key={index} delay={index * 0.1} direction="up">
+          <div className="grid grid-cols-3 gap-2 sm:gap-4 md:gap-8">
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((index) => (
+              <FadeIn key={index} delay={index * 0.05} direction="up">
                 <motion.div 
                   style={{ skewY, scale }}
-                  className="group relative aspect-[4/3] bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden flex flex-col items-center justify-center transition-shadow hover:shadow-md hover:border-primary-200"
+                  className="group relative aspect-square md:aspect-[4/3] bg-white rounded-xl md:rounded-2xl shadow-sm border border-slate-200 overflow-hidden flex flex-col items-center justify-center transition-shadow hover:shadow-md hover:border-primary-200"
                 >
                   <div className="absolute inset-0 bg-slate-50/50"></div>
-                  <div className="relative z-10 flex flex-col items-center text-slate-400 p-6 text-center">
-                    <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mb-4 shadow-sm">
-                      <ImageIcon className="w-8 h-8 text-slate-300" />
+                  <div className="relative z-10 flex flex-col items-center text-slate-400 p-2 md:p-6 text-center">
+                    <div className="w-8 h-8 md:w-16 md:h-16 bg-white rounded-full flex items-center justify-center mb-1 md:mb-4 shadow-sm">
+                      <ImageIcon className="w-4 h-4 md:w-8 md:h-8 text-slate-300" />
                     </div>
-                    <p className="font-medium text-slate-600 mb-1">Image Coming Soon</p>
-                    <p className="text-sm text-slate-500">We are currently updating our gallery with new photos.</p>
+                    <p className="hidden md:block font-medium text-slate-600 mb-1">Image Coming Soon</p>
+                    <p className="hidden md:block text-sm text-slate-500">We are currently updating our gallery.</p>
                   </div>
                 </motion.div>
               </FadeIn>

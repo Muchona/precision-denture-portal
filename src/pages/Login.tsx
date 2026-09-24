@@ -2,7 +2,6 @@ import { useState } from 'react';
 import logo from '../assets/logo.png';
 import { Mail, Lock, ArrowRight, User, Building, Briefcase, Phone, Eye, EyeOff } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { supabase } from '../lib/supabase';
 
 export default function Login() {
   const [isSignUp, setIsSignUp] = useState(false);

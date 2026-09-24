@@ -1,8 +1,8 @@
 import { Link, Outlet } from 'react-router-dom';
-import { LogIn, Menu, X, LayoutDashboard, MapPin, Phone, Mail } from 'lucide-react';
+import { LogIn, Menu, X, LayoutDashboard } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import logo from '../assets/logo.png';
-import logoFooter from '../assets/logo-footer2.png';
+
 import { supabase } from '../lib/supabase';
 import Footer from '../components/Footer';
 
