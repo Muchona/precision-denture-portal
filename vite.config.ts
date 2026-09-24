@@ -4,7 +4,7 @@ import tailwindcss from '@tailwindcss/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/monaghan-denture-portal/',
+  base: '/precision-denture-portal/',
   plugins: [
     react(),
     tailwindcss(),
