@@ -13,7 +13,7 @@ export default function About() {
         keywords="dental lab about us, ivoclar programill 7 ireland, dental technicians monaghan, precision dental team"
       />
       {/* Hero Section */}
-      <section className="relative pt-28 pb-12 lg:pt-32 lg:pb-16 overflow-hidden bg-slate-900 border-b border-slate-800">
+      <section className="relative py-12 lg:py-16 overflow-hidden bg-slate-900 border-b border-slate-800">
         {/* Decorative background blobs */}
         <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
           <div className="absolute -top-40 -right-40 w-96 h-96 bg-primary-600/20 rounded-full blur-3xl"></div>
