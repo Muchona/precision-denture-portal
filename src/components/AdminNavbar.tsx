@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { supabase } from '../lib/supabase';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { LogOut, User, LayoutDashboard, Users, Settings } from 'lucide-react';
+import logo from '../assets/logo.png';
 
 export default function AdminNavbar() {
   const navigate = useNavigate();
@@ -32,6 +33,7 @@ export default function AdminNavbar() {
   }, []);
 
   const handleSignOut = async () => {
+    localStorage.removeItem('mock_user');
     await supabase.auth.signOut();
     navigate('/');
   };
@@ -39,18 +41,14 @@ export default function AdminNavbar() {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <nav className="w-full bg-surface-card border-b border-primary-500/20 px-8 py-4 flex items-center justify-between sticky top-0 z-50">
+    <nav className="w-full bg-white border-b border-slate-200 px-8 py-4 flex items-center justify-between sticky top-0 z-50 shadow-sm">
       <div className="flex items-center gap-8">
-        <Link to="/admin" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-          <div className="w-10 h-10 flex items-center justify-center relative">
-            <img src="/logo.png" alt="Logo" className="w-10 h-10 object-contain drop-shadow-[0_0_15px_rgba(34,197,94,0.3)]" />
-            <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-primary-500 rounded-full flex items-center justify-center shadow-[0_0_10px_rgba(34,197,94,0.5)]">
-              <span className="text-[8px] font-bold text-white">A</span>
+        <Link to="/admin" className="flex items-center hover:opacity-80 transition-opacity">
+          <div className="flex items-center justify-center relative">
+            <img src={logo} alt="Precision Dental Services Logo" className="h-16 w-auto object-contain" />
+            <div className="absolute -bottom-1 -right-2 w-5 h-5 bg-primary-500 rounded-full flex items-center justify-center shadow-sm border-2 border-white">
+              <span className="text-[10px] font-bold text-white">A</span>
             </div>
-          </div>
-          <div className="flex flex-col">
-            <span className="text-xl font-bold text-white tracking-tight leading-none">Monaghan Denture</span>
-            <span className="text-[10px] text-primary-400 font-bold uppercase tracking-widest mt-1">Admin Portal</span>
           </div>
         </Link>
 
@@ -59,8 +57,8 @@ export default function AdminNavbar() {
             to="/admin" 
             className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all ${
               isActive('/admin') 
-                ? 'bg-primary-500/10 text-primary-400 border border-primary-500/20' 
-                : 'text-gray-400 hover:text-white hover:bg-white/5 border border-transparent'
+                ? 'bg-primary-50 text-primary-600 border border-primary-100' 
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 border border-transparent'
             }`}
           >
             <LayoutDashboard className="w-4 h-4" />
@@ -70,8 +68,8 @@ export default function AdminNavbar() {
             to="/admin/clients" 
             className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all ${
               isActive('/admin/clients') 
-                ? 'bg-primary-500/10 text-primary-400 border border-primary-500/20' 
-                : 'text-gray-400 hover:text-white hover:bg-white/5 border border-transparent'
+                ? 'bg-primary-50 text-primary-600 border border-primary-100' 
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 border border-transparent'
             }`}
           >
             <Users className="w-4 h-4" />
@@ -81,41 +79,49 @@ export default function AdminNavbar() {
       </div>
       
       <div className="flex items-center gap-6 relative" ref={dropdownRef}>
+        {/* Public Navigation Links */}
+        <div className="hidden lg:flex items-center gap-6 mr-4 border-r border-slate-200 pr-6">
+          <Link to="/" className="text-sm font-medium text-slate-600 hover:text-primary-600 transition-colors">Website</Link>
+          <Link to="/about" className="text-sm font-medium text-slate-600 hover:text-primary-600 transition-colors">About Us</Link>
+          <Link to="/products" className="text-sm font-medium text-slate-600 hover:text-primary-600 transition-colors">Products</Link>
+          <Link to="/contact" className="text-sm font-medium text-slate-600 hover:text-primary-600 transition-colors">Contact</Link>
+        </div>
+        
         <button 
           onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-          className="flex items-center gap-3 hover:bg-white/5 py-1.5 px-3 rounded-xl transition-colors border border-transparent hover:border-white/10"
+          className="flex items-center gap-3 hover:bg-slate-50 py-1.5 px-3 rounded-xl transition-colors border border-transparent hover:border-slate-200"
         >
-          <div className="w-9 h-9 bg-surface-dark border border-primary-500/30 rounded-full flex items-center justify-center overflow-hidden">
+          <div className="w-9 h-9 bg-slate-100 border border-slate-200 rounded-full flex items-center justify-center overflow-hidden">
             {profile?.avatar_url ? (
               <img src={profile.avatar_url} alt="Profile" className="w-full h-full object-cover" />
             ) : (
-              <User className="w-4 h-4 text-primary-400" />
+              <User className="w-4 h-4 text-primary-500" />
             )}
           </div>
-          <div className="text-sm text-gray-300 hidden sm:flex flex-col items-start font-medium text-left">
+          <div className="text-sm text-slate-700 hidden sm:flex flex-col items-start font-medium text-left">
             <span>{profile?.first_name ? `${profile.first_name} ${profile.last_name}` : (userEmail?.split('@')[0] || 'Admin')}</span>
-            <span className="text-xs text-primary-500 font-bold">System Admin</span>
+            <span className="text-xs text-primary-600 font-bold">System Admin</span>
           </div>
         </button>
 
         {isDropdownOpen && (
-          <div className="absolute right-0 top-full mt-3 w-64 apple-glass rounded-2xl overflow-hidden animate-in fade-in slide-in-from-top-4 duration-200 z-50">
-            <div className="px-5 py-4 border-b border-white/5 bg-surface-dark/50">
-              <p className="text-sm font-bold text-white truncate">{profile?.first_name ? `${profile.first_name} ${profile.last_name}` : userEmail}</p>
-              <p className="text-xs text-primary-400 mt-1">System Admin</p>
+          <div className="absolute right-0 top-full mt-3 w-64 bg-white border border-slate-200 shadow-xl rounded-2xl overflow-hidden animate-in fade-in slide-in-from-top-4 duration-200 z-50">
+            <div className="px-5 py-4 border-b border-slate-100 bg-slate-50">
+              <p className="text-sm font-bold text-slate-900 truncate">{profile?.first_name ? `${profile.first_name} ${profile.last_name}` : userEmail}</p>
+              <p className="text-xs text-slate-500 mt-1">System Admin</p>
             </div>
             <div className="p-2 space-y-1">
               <Link 
                 to="/admin/settings"
-                className="w-full text-left px-3 py-2.5 text-sm text-gray-300 hover:bg-white/10 hover:text-white rounded-xl transition-colors flex items-center gap-3"
+                className="w-full text-left px-3 py-2.5 text-sm text-slate-700 hover:bg-slate-50 hover:text-primary-600 rounded-xl transition-colors flex items-center gap-3"
                 onClick={() => setIsDropdownOpen(false)}
               >
-                <Settings className="w-4 h-4" />
+                <Settings className="w-4 h-4 text-slate-400" />
                 Settings
               </Link>
               <button 
                 onClick={handleSignOut}
-                className="w-full text-left px-3 py-2.5 text-sm text-red-400 hover:bg-red-500/10 hover:text-red-300 rounded-xl transition-colors flex items-center gap-3"
+                className="w-full text-left px-3 py-2.5 text-sm text-red-600 hover:bg-red-50 hover:text-red-700 rounded-xl transition-colors flex items-center gap-3"
               >
                 <LogOut className="w-4 h-4" />
                 Sign Out

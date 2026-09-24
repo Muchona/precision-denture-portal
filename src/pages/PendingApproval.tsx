@@ -21,7 +21,7 @@ export default function PendingApproval() {
         
         <h2 className="text-2xl font-bold text-white mb-4">Account Pending</h2>
         <p className="text-gray-400 mb-8 leading-relaxed">
-          Thanks for registering! Your account is currently pending approval by Monaghan Denture Clinic. You will receive an email notification once your account has been reviewed and approved.
+          Thanks for registering! Your account is currently pending approval by Precision Dental Services. You will receive an email notification once your account has been reviewed and approved.
         </p>
         
         <button

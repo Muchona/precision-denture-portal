@@ -8,6 +8,7 @@ export default function AdminClients() {
   const [clients, setClients] = useState<any[]>([]);
   const [selectedClient, setSelectedClient] = useState<any | null>(null);
   const [clientOrders, setClientOrders] = useState<any[]>([]);
+  const [selectedOrder, setSelectedOrder] = useState<any | null>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [editForm, setEditForm] = useState<any>({});
   const [isSaving, setIsSaving] = useState(false);
@@ -52,7 +53,7 @@ export default function AdminClients() {
       const { data, error } = await supabase
         .from('orders')
         .select('*')
-        .eq('user_id', userId)
+        .eq('client_id', userId)
         .order('created_at', { ascending: false });
 
       if (error) throw error;
@@ -226,7 +227,7 @@ export default function AdminClients() {
           <div className="relative w-full max-w-2xl bg-surface-dark h-full shadow-2xl border-l border-white/10 flex flex-col transform transition-transform duration-300 ease-in-out translate-x-0 overflow-y-auto">
             
             {/* Header */}
-            <div className="sticky top-0 z-10 apple-glass px-8 py-6 border-b border-white/10 flex items-center justify-between">
+            <div className="sticky top-0 z-20 bg-surface-dark px-8 py-6 border-b border-white/10 flex items-center justify-between">
               <div>
                 <h2 className="text-2xl font-bold text-white mb-1">{selectedClient.business_name || 'Unnamed Clinic'}</h2>
                 <p className="text-gray-400 text-sm">Client ID: {selectedClient.id.substring(0,8)}</p>
@@ -413,9 +414,9 @@ export default function AdminClients() {
                           </div>
                         </div>
                         <div className="opacity-0 group-hover:opacity-100 transition-opacity">
-                           <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:text-white hover:bg-primary-500/20 transition-all">
+                           <button onClick={(e) => { e.stopPropagation(); setSelectedOrder(order); }} className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:text-white hover:bg-primary-500/20 transition-all cursor-pointer">
                               <Eye className="w-4 h-4" />
-                           </div>
+                           </button>
                         </div>
                       </div>
                     ))
@@ -423,6 +424,80 @@ export default function AdminClients() {
                 </div>
               </section>
 
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Order Details Modal */}
+      {selectedOrder && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setSelectedOrder(null)}></div>
+          <div className="relative bg-surface-dark border border-white/10 p-6 rounded-3xl w-full max-w-lg shadow-2xl apple-glass animate-in fade-in zoom-in-95 duration-200">
+            <div className="flex items-center justify-between mb-6 pb-4 border-b border-white/5">
+              <h3 className="text-xl font-bold text-white">Order Details</h3>
+              <button onClick={() => setSelectedOrder(null)} className="text-gray-400 hover:text-white transition-colors bg-white/5 p-2 rounded-full hover:bg-white/10 cursor-pointer">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            
+            <div className="space-y-6">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="bg-black/20 p-4 rounded-xl border border-white/5">
+                  <p className="text-xs text-gray-500 uppercase tracking-wider font-bold mb-1">Order ID</p>
+                  <p className="text-sm font-medium text-white">{selectedOrder.id.split('-')[0].toUpperCase()}</p>
+                </div>
+                <div className="bg-black/20 p-4 rounded-xl border border-white/5">
+                  <p className="text-xs text-gray-500 uppercase tracking-wider font-bold mb-1">Patient Ref</p>
+                  <p className="text-sm font-medium text-white">{selectedOrder.patient_ref || 'N/A'}</p>
+                </div>
+              </div>
+              
+              <div className="grid grid-cols-2 gap-4">
+                <div className="bg-black/20 p-4 rounded-xl border border-white/5">
+                  <p className="text-xs text-gray-500 uppercase tracking-wider font-bold mb-1">Material</p>
+                  <p className="text-sm font-medium text-white">{selectedOrder.material || 'N/A'}</p>
+                </div>
+                <div className="bg-black/20 p-4 rounded-xl border border-white/5">
+                  <p className="text-xs text-gray-500 uppercase tracking-wider font-bold mb-1">Shade</p>
+                  <p className="text-sm font-medium text-white">{selectedOrder.shade || 'N/A'}</p>
+                </div>
+              </div>
+
+              <div className="bg-black/20 p-4 rounded-xl border border-white/5">
+                <p className="text-xs text-gray-500 uppercase tracking-wider font-bold mb-1">Teeth Selected</p>
+                <div className="flex flex-wrap gap-2 mt-2">
+                  {selectedOrder.teeth && selectedOrder.teeth.length > 0 ? (
+                    selectedOrder.teeth.map((t: number) => (
+                      <span key={t} className="px-3 py-1 bg-primary-500/10 border border-primary-500/20 text-primary-400 rounded-md text-xs font-bold">
+                        {t}
+                      </span>
+                    ))
+                  ) : (
+                    <span className="text-sm text-gray-400">None</span>
+                  )}
+                </div>
+              </div>
+              
+              <div className="grid grid-cols-2 gap-4">
+                <div className="bg-black/20 p-4 rounded-xl border border-white/5">
+                  <p className="text-xs text-gray-500 uppercase tracking-wider font-bold mb-1">Delivery Method</p>
+                  <p className="text-sm font-medium text-white">{selectedOrder.delivery_method || 'N/A'}</p>
+                </div>
+                <div className="bg-black/20 p-4 rounded-xl border border-white/5">
+                  <p className="text-xs text-gray-500 uppercase tracking-wider font-bold mb-1">Additional Notes</p>
+                  <p className="text-sm font-medium text-white whitespace-pre-wrap">{selectedOrder.notes || 'None'}</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="mt-8 pt-6 border-t border-white/5 flex justify-end">
+              <button 
+                onClick={() => setSelectedOrder(null)}
+                className="px-6 py-2.5 bg-primary-600 hover:bg-primary-500 text-white font-bold rounded-xl transition-all shadow-[0_0_15px_rgba(34,197,94,0.3)] hover:shadow-[0_0_25px_rgba(34,197,94,0.5)] cursor-pointer"
+              >
+                Close
+              </button>
             </div>
           </div>
         </div>

@@ -1,9 +1,23 @@
-Project: Monaghan Denture Clinic
-Conversation ID: 91873f75-f47f-4b1a-924f-ba0dc6790e67
+# Monaghan Denture Clinic - Recovery & Progress Summary
 
-Status as of August 17:
-- Phase 4 (3D Viewer) is FULLY COMPLETE. The viewer no longer crashes on CAM files, the damping/ice-sliding physics have been fixed, and it looks beautiful.
-- Next Step: Phase 5 (Dropbox API Integration). 
-- Action Item: Decide whether to set up a dummy Dropbox account or get the real API key from Philip.
+Here is a record of what we accomplished in this conversation session for the Monaghan Denture Clinic portal.
 
-If the conversation history bug happens again after you update the IDE, just search for this ID or tell Antigravity to look for it!
+## 1. Database & Queries
+- Fixed an SQL join syntax error in `AdminDashboard.tsx` (`profiles:client_id` changed to `profiles`).
+- Fixed a bug in `AdminClients.tsx` where client order history was fetching by `user_id` instead of `client_id`.
+- Advised running a Supabase SQL command to add a `notes` column to the `orders` table: `ALTER TABLE public.orders ADD COLUMN notes TEXT;`
+
+## 2. Admin Dashboard & Admin Clients UI
+- Fixed the header on the `AdminClients.tsx` modal to use a solid background (`bg-surface-dark`) so text doesn't overlap when scrolling.
+- Wired up the "Eye" icon in `AdminClients.tsx` so clicking it opens an Order Details modal.
+- Added a modern "expandable accordion row" to the global `AdminDashboard.tsx`. Admins can now click any order row to slide down an expanded view containing the client's notes, manufacturing details, and teeth selected.
+
+## 3. New Order Page
+- Added an "Additional Notes" text box to the `NewOrder.tsx` form.
+- Re-structured the layout so that "Delivery Options" (Section 5) and "Message from Client" (Section 6) are displayed side-by-side in equally sized boxes for a cleaner UI.
+- Updated the Order Details modals in both `Dashboard.tsx` (Client) and `AdminClients.tsx` (Admin) to display these notes.
+
+## 4. Communication & Next Steps
+- Drafted a review email to Philip. 
+- Agreed to use a "Lean MVP" approach for admin registration: Philip will register normally as a client to test the workflow, and then his account will be manually upgraded to `admin` directly inside the Supabase Database Editor.
+- Added a disclaimer to the email to remind Philip this is a test version, inviting him to provide feedback on logos, colors, and layout changes.
