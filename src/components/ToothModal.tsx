@@ -8,7 +8,6 @@ interface ToothModalProps {
 
 export default function ToothModal({ type, title, message }: ToothModalProps) {
   const isSuccess = type === 'success';
-  const imageSrc = isSuccess ? '/images/smiling_tooth.png' : '/images/sad_tooth.png';
   
   return (
     <div className="relative overflow-hidden w-[450px] max-w-[90vw] bg-[#12121a] border border-white/10 rounded-3xl shadow-[0_30px_60px_-15px_rgba(0,0,0,0.8)] flex flex-col items-center justify-center p-10 text-center animate-[bounce-in_0.5s_cubic-bezier(0.175,0.885,0.32,1.275)]">
