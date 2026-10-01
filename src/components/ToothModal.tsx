@@ -16,13 +16,15 @@ export default function ToothModal({ type, title, message }: ToothModalProps) {
       {/* Background Glow */}
       <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full blur-[100px] opacity-20 pointer-events-none ${isSuccess ? 'bg-blue-500' : 'bg-red-500'}`} />
       
-      {/* 3D Image */}
-      <div className="relative w-56 h-56 mb-8 z-20 flex items-center justify-center animate-[pulse_4s_ease-in-out_infinite]">
-        <img 
-          src={imageSrc} 
-          alt={type} 
-          className="w-full h-full object-contain filter drop-shadow-[0_20px_20px_rgba(0,0,0,0.5)]" 
-        />
+      {/* Icon */}
+      <div className="relative w-32 h-32 mb-8 z-20 flex items-center justify-center animate-[pulse_4s_ease-in-out_infinite]">
+        <div className={`w-full h-full rounded-full flex items-center justify-center shadow-[0_0_50px_rgba(0,0,0,0.5)] ${isSuccess ? 'bg-blue-500/20 text-blue-400' : 'bg-red-500/20 text-red-500'}`}>
+          {isSuccess ? (
+            <Zap className="w-16 h-16" fill="currentColor" />
+          ) : (
+            <AlertTriangle className="w-16 h-16" fill="currentColor" />
+          )}
+        </div>
       </div>
 
       {/* Content */}

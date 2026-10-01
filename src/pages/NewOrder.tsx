@@ -77,7 +77,13 @@ export default function NewOrder() {
     try {
       const { data: { session } } = await supabase.auth.getSession();
       
-      if (!session) {
+      let userId = session?.user?.id;
+      
+      if (!userId && localStorage.getItem('mock_user')) {
+        userId = 'mock-client-id-12345'; // Fallback for local testing
+      }
+
+      if (!userId) {
         notify.error("You must be logged in to submit an order.");
         setIsSubmitting(false);
         return;
@@ -88,7 +94,7 @@ export default function NewOrder() {
       for (const file of files) {
         const fileExt = file.name.split('.').pop();
         const fileName = `${Date.now()}_${Math.random().toString(36).substring(7)}.${fileExt}`;
-        const filePath = `${session.user.id}/${fileName}`;
+        const filePath = `${userId}/${fileName}`;
         
         const { error: uploadError } = await supabase.storage
           .from('cam-files')
@@ -103,7 +109,7 @@ export default function NewOrder() {
 
       // 2. Save Order to Database
       const { error: insertError } = await supabase.from('orders').insert({
-        client_id: session.user.id,
+        client_id: userId,
         company_name: companyName,
         contact_name: contactName,
         contact_phone: contactPhone,
@@ -120,6 +126,25 @@ export default function NewOrder() {
 
       if (insertError) {
         throw new Error(`Failed to create order: ${insertError.message}`);
+      }
+
+      // 3. Send Email Notification
+      try {
+        await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            access_key: "e1b2d3f1-a2ba-419c-a9a3-63e10bc4e201",
+            subject: `New Order Received - ${companyName}`,
+            from_name: "Precision Dental Portal",
+            message: `A new order has been placed by ${contactName} (${companyName}).\n\nPatient Ref: ${patientRef}\nMaterial: ${selectedMaterial}\nShade: ${selectedShade || 'N/A'}\nTeeth: ${selectedTeeth.length > 0 ? selectedTeeth.join(', ') : 'N/A'}\nDelivery: ${selectedDelivery}\nNotes: ${notes || 'None'}\n\nPlease log in to the admin portal for full details and to download the CAM files.`
+          })
+        });
+      } catch (emailError) {
+        console.error("Failed to send email notification", emailError);
       }
 
       notify.success('Order submitted successfully!');
@@ -281,7 +306,7 @@ export default function NewOrder() {
                       </optgroup>
                     </select>
                     <label className="flex items-center gap-2 mt-3 cursor-pointer group">
-                      <input type="checkbox" className="w-4 h-4 rounded text-primary-600 bg-white border-slate-300 focus:ring-primary-500/50 cursor-pointer" />
+                      <input type="checkbox" defaultChecked className="w-4 h-4 rounded text-primary-600 bg-white border-slate-300 focus:ring-primary-500/50 cursor-pointer" />
                       <span className="text-sm text-slate-500 group-hover:text-slate-700 transition-colors">Apply to all</span>
                     </label>
                   </div>
@@ -300,7 +325,7 @@ export default function NewOrder() {
                       ))}
                     </select>
                     <label className="flex items-center gap-2 mt-3 cursor-pointer group">
-                      <input type="checkbox" className="w-4 h-4 rounded text-primary-600 bg-white border-slate-300 focus:ring-primary-500/50 cursor-pointer" />
+                      <input type="checkbox" defaultChecked className="w-4 h-4 rounded text-primary-600 bg-white border-slate-300 focus:ring-primary-500/50 cursor-pointer" />
                       <span className="text-sm text-slate-500 group-hover:text-slate-700 transition-colors">Apply to all</span>
                     </label>
                   </div>

@@ -1,8 +1,43 @@
 import { Mail, Phone, MapPin, Clock } from 'lucide-react';
 import FadeIn from '../../components/FadeIn';
 import SEO from '../../components/SEO';
+import { useState } from 'react';
+import { notify } from '../../lib/notify';
 
 export default function Contact() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSent, setIsSent] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    const formData = new FormData(e.currentTarget);
+    const object = Object.fromEntries(formData);
+    const json = JSON.stringify(object);
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        },
+        body: json
+      });
+      const result = await response.json();
+      if (result.success) {
+        setIsSent(true);
+      } else {
+        notify.error("Something went wrong.");
+      }
+    } catch (error) {
+      notify.error("Failed to send message.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className="flex flex-col min-h-screen bg-slate-50">
       <SEO 
@@ -106,42 +141,76 @@ export default function Contact() {
             {/* Contact Form */}
             <FadeIn delay={0.4} direction="left" className="h-full">
               <div className="bg-white p-8 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-slate-100 h-full">
-              <h3 className="text-2xl font-bold text-slate-900 mb-6">Send us a message</h3>
-              <form className="space-y-6">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-slate-700 mb-2">Full Name</label>
-                  <input
-                    type="text"
-                    id="name"
-                    className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-shadow"
-                    placeholder="John Doe"
-                  />
+              
+              {isSent ? (
+                <div className="flex flex-col items-center justify-center h-full text-center py-12 min-h-[400px]">
+                  <div className="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mb-6">
+                    <svg className="w-10 h-10 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <h3 className="text-3xl font-extrabold text-slate-900 mb-4">Message Sent!</h3>
+                  <p className="text-slate-500 text-lg mb-8 max-w-sm">
+                    Thank you for reaching out. We have received your message and will get back to you shortly.
+                  </p>
+                  <button 
+                    onClick={() => setIsSent(false)} 
+                    className="px-8 py-3 bg-slate-50 hover:bg-slate-100 text-slate-700 font-bold rounded-xl border border-slate-200 transition-colors"
+                  >
+                    Send Another Message
+                  </button>
                 </div>
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-2">Email Address</label>
-                  <input
-                    type="email"
-                    id="email"
-                    className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-shadow"
-                    placeholder="john@example.com"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-slate-700 mb-2">Message</label>
-                  <textarea
-                    id="message"
-                    rows={6}
-                    className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-shadow resize-none"
-                    placeholder="How can we help you?"
-                  ></textarea>
-                </div>
-                <button
-                  type="button"
-                  className="w-full py-4 bg-primary-600 hover:bg-primary-500 text-white font-bold rounded-xl transition-colors shadow-lg shadow-primary-500/30"
-                >
-                  Send Message
-                </button>
-              </form>
+              ) : (
+                <>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-6">Send us a message</h3>
+                  <form onSubmit={handleSubmit} className="space-y-6">
+                    <input type="hidden" name="access_key" value="e1b2d3f1-a2ba-419c-a9a3-63e10bc4e201" />
+                    <input type="hidden" name="subject" value="New Contact Form Submission - Precision Dental" />
+                    <input type="hidden" name="from_name" value="Precision Dental Portal" />
+                    
+                    <div>
+                      <label htmlFor="name" className="block text-sm font-medium text-slate-700 mb-2">Full Name</label>
+                      <input
+                        type="text"
+                        name="name"
+                        id="name"
+                        required
+                        className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-shadow"
+                        placeholder="John Doe"
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-2">Email Address</label>
+                      <input
+                        type="email"
+                        name="email"
+                        id="email"
+                        required
+                        className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-shadow"
+                        placeholder="john@example.com"
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="message" className="block text-sm font-medium text-slate-700 mb-2">Message</label>
+                      <textarea
+                        name="message"
+                        id="message"
+                        rows={6}
+                        required
+                        className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-shadow resize-none"
+                        placeholder="How can we help you?"
+                      ></textarea>
+                    </div>
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="w-full py-4 bg-primary-600 hover:bg-primary-500 text-white font-bold rounded-xl transition-colors shadow-lg shadow-primary-500/30 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {isSubmitting ? 'Sending...' : 'Send Message'}
+                    </button>
+                  </form>
+                </>
+              )}
               </div>
             </FadeIn>
 
