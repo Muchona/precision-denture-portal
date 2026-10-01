@@ -56,7 +56,7 @@ export default function Login() {
         setPassword('');
         setConfirmPassword('');
       } else {
-        const { data, error: signInError } = await supabase.auth.signInWithPassword({
+        const { error: signInError } = await supabase.auth.signInWithPassword({
           email,
           password,
         });
