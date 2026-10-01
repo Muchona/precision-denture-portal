@@ -2,6 +2,7 @@ import { useState } from 'react';
 import logo from '../assets/logo.png';
 import { Mail, Lock, ArrowRight, User, Building, Briefcase, Phone, Eye, EyeOff } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { supabase } from '../lib/supabase';
 
 export default function Login() {
   const [isSignUp, setIsSignUp] = useState(false);
@@ -29,24 +30,52 @@ export default function Login() {
     setError(null);
     setMessage(null);
 
-    if (isSignUp) {
-      // Mock registration
-      setMessage('Registration successful! You are now pending approval.');
-      setPassword('');
-      setConfirmPassword('');
-      navigate('/pending-approval');
-    } else {
-      // Mock login
-      if (email.trim().toLowerCase() === 'info@precisiondental.ie' || email.trim().toLowerCase() === 'pmg000@hotmail.com') {
-        localStorage.setItem('mock_user', 'admin');
-        navigate('/admin');
+    try {
+      if (isSignUp) {
+        if (password !== confirmPassword) {
+          throw new Error("Passwords do not match");
+        }
+        
+        const { error: signUpError } = await supabase.auth.signUp({
+          email,
+          password,
+          options: {
+            data: {
+              first_name: firstName,
+              last_name: lastName,
+              business_name: businessName,
+              job_role: jobRole,
+              phone: phone,
+            }
+          }
+        });
+
+        if (signUpError) throw signUpError;
+        
+        setMessage('Registration successful! Please check your email for the confirmation link.');
+        setPassword('');
+        setConfirmPassword('');
       } else {
-        localStorage.setItem('mock_user', 'client');
-        navigate('/dashboard');
+        const { data, error: signInError } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
+
+        if (signInError) throw signInError;
+        
+        localStorage.removeItem('mock_user');
+        
+        if (email.trim().toLowerCase() === 'info@precisiondental.ie' || email.trim().toLowerCase() === 'pmg000@hotmail.com') {
+          navigate('/admin');
+        } else {
+          navigate('/dashboard');
+        }
       }
+    } catch (err: any) {
+      setError(err.message || 'An error occurred during authentication.');
+    } finally {
+      setLoading(false);
     }
-    
-    setLoading(false);
   };
 
   const resetForm = () => {
