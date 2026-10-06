@@ -65,7 +65,15 @@ export default function Login() {
         
         localStorage.removeItem('mock_user');
         
-        if (email.trim().toLowerCase() === 'info@precisiondental.ie' || email.trim().toLowerCase() === 'pmg000@hotmail.com') {
+        const allowedAdmins = [
+          'info@precisiondental.ie',
+          'pmg000@hotmail.com',
+          'info@monaghandentureclinic.com',
+          'precisiondental.ie@gmail.com',
+          'mucho055@gmail.com',
+          'muchona055@gmail.com'
+        ];
+        if (allowedAdmins.includes(email.trim().toLowerCase())) {
           navigate('/admin');
         } else {
           navigate('/dashboard');

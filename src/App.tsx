@@ -65,7 +65,15 @@ function AdminRoute({ children }: { children: React.ReactNode }) {
     const { data: { session } } = await supabase.auth.getSession();
     if (session && session.user.email) {
       const email = session.user.email.toLowerCase();
-      if (email === 'info@precisiondental.ie' || email === 'pmg000@hotmail.com') {
+      const allowedAdmins = [
+        'info@precisiondental.ie',
+        'pmg000@hotmail.com',
+        'info@monaghandentureclinic.com',
+        'precisiondental.ie@gmail.com',
+        'mucho055@gmail.com',
+        'muchona055@gmail.com'
+      ];
+      if (allowedAdmins.includes(email)) {
         setIsAdmin(true);
       }
     }
