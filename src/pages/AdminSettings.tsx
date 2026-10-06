@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import AdminNavbar from '../components/AdminNavbar';
-import { Save, User, Phone, Mail, Lock } from 'lucide-react';
+import { Save, User, Phone, Mail, Lock, UploadCloud } from 'lucide-react';
+import { useRef } from 'react';
 import { supabase } from '../lib/supabase';
 import { notify } from '../lib/notify';
 
@@ -12,6 +13,9 @@ export default function AdminSettings() {
   const [newPassword, setNewPassword] = useState('');
   const [isSaving, setIsSaving] = useState(false);
   const [isSavingSecurity, setIsSavingSecurity] = useState(false);
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     fetchProfile();
@@ -25,8 +29,40 @@ export default function AdminSettings() {
         setFirstName(data.first_name || '');
         setLastName(data.last_name || '');
         setPhone(data.phone || '');
+        setAvatarUrl(data.avatar_url || null);
       }
       setEmail(user.email || '');
+    }
+  };
+
+  
+  const handleAvatarUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    try {
+      if (!e.target.files || e.target.files.length === 0) return;
+      setIsUploading(true);
+      const file = e.target.files[0];
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not logged in');
+
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${user.id}/${Math.random()}.${fileExt}`;
+
+      const { error: uploadError } = await supabase.storage.from('avatars').upload(fileName, file);
+      if (uploadError) throw uploadError;
+
+      const { data } = supabase.storage.from('avatars').getPublicUrl(fileName);
+      const newAvatarUrl = data.publicUrl;
+
+      const { error: updateError } = await supabase.from('profiles').update({ avatar_url: newAvatarUrl }).eq('id', user.id);
+      if (updateError) throw updateError;
+
+      setAvatarUrl(newAvatarUrl);
+      notify.success('Profile picture updated successfully!');
+      setTimeout(() => window.location.reload(), 1500);
+    } catch (error: any) {
+      notify.error(error.message);
+    } finally {
+      setIsUploading(false);
     }
   };
 
@@ -85,18 +121,58 @@ export default function AdminSettings() {
           
           <div className="px-8 py-6 border-b border-slate-200 flex items-center justify-between bg-slate-100/50">
             <div>
-              <h1 className="text-2xl font-bold text-white mb-1">Admin Settings</h1>
+              <h1 className="text-2xl font-bold text-slate-800 mb-1">Admin Settings</h1>
               <p className="text-sm text-slate-500">Manage your administrative profile and security credentials.</p>
             </div>
           </div>
 
           <form onSubmit={handleSave} className="p-8 sm:p-10">
+            
             <h2 className="text-xl font-bold text-slate-800 mb-8 flex items-center gap-3">
               <div className="w-10 h-10 bg-primary-500/10 rounded-full flex items-center justify-center">
-                <User className="w-5 h-5 text-primary-500" />
+                <User className="w-5 h-5 text-primary-600" />
               </div>
               Personal Details
             </h2>
+
+            <div className="flex flex-col sm:flex-row items-center gap-8 mb-10 pb-10 border-b border-slate-200">
+              <div className="relative group">
+                <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-slate-100 shadow-md bg-white flex items-center justify-center relative">
+                  {avatarUrl ? (
+                    <img src={avatarUrl} alt="Avatar" className="w-full h-full object-cover" />
+                  ) : (
+                    <User className="w-12 h-12 text-slate-400" />
+                  )}
+                  <div 
+                    onClick={() => fileInputRef.current?.click()}
+                    className="absolute inset-0 bg-slate-900/60 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+                  >
+                    <UploadCloud className="w-6 h-6 text-white mb-1" />
+                    <span className="text-[10px] font-bold text-white uppercase tracking-wider">Change</span>
+                  </div>
+                </div>
+                <input 
+                  type="file" 
+                  ref={fileInputRef} 
+                  onChange={handleAvatarUpload} 
+                  accept="image/*" 
+                  className="hidden" 
+                />
+              </div>
+              <div className="text-center sm:text-left">
+                <h3 className="text-lg font-bold text-slate-800">Profile Picture</h3>
+                <p className="text-sm text-slate-500 mt-1 mb-3">Upload a professional photo for your admin profile.</p>
+                <button
+                  type="button"
+                  onClick={() => fileInputRef.current?.click()}
+                  disabled={isUploading}
+                  className="px-4 py-2 bg-white border border-slate-200 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50 hover:border-slate-300 transition-colors shadow-sm disabled:opacity-50"
+                >
+                  {isUploading ? 'Uploading...' : 'Upload Image'}
+                </button>
+              </div>
+            </div>
+
 
             <div className="space-y-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
