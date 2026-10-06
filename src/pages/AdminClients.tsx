@@ -433,60 +433,60 @@ export default function AdminClients() {
       {selectedOrder && (
         <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setSelectedOrder(null)}></div>
-          <div className="relative bg-surface-dark border border-white/10 p-6 rounded-3xl w-full max-w-lg shadow-2xl apple-glass animate-in fade-in zoom-in-95 duration-200">
-            <div className="flex items-center justify-between mb-6 pb-4 border-b border-white/5">
-              <h3 className="text-xl font-bold text-white">Order Details</h3>
-              <button onClick={() => setSelectedOrder(null)} className="text-gray-400 hover:text-white transition-colors bg-white/5 p-2 rounded-full hover:bg-white/10 cursor-pointer">
+          <div className="relative bg-white border border-slate-200 p-6 rounded-3xl w-full max-w-lg shadow-2xl animate-in fade-in zoom-in-95 duration-200">
+            <div className="flex items-center justify-between mb-6 pb-4 border-b border-slate-100">
+              <h3 className="text-xl font-bold text-slate-900">Order Details</h3>
+              <button onClick={() => setSelectedOrder(null)} className="text-slate-400 hover:text-slate-900 transition-colors bg-slate-100 p-2 rounded-full hover:bg-slate-200 cursor-pointer">
                 <X className="w-5 h-5" />
               </button>
             </div>
             
             <div className="space-y-6">
               <div className="grid grid-cols-2 gap-4">
-                <div className="bg-black/20 p-4 rounded-xl border border-white/5">
+                <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
                   <p className="text-xs text-gray-500 uppercase tracking-wider font-bold mb-1">Order ID</p>
-                  <p className="text-sm font-medium text-white">{selectedOrder.id.split('-')[0].toUpperCase()}</p>
+                  <p className="text-sm font-medium text-slate-900">{selectedOrder.id.split('-')[0].toUpperCase()}</p>
                 </div>
-                <div className="bg-black/20 p-4 rounded-xl border border-white/5">
+                <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
                   <p className="text-xs text-gray-500 uppercase tracking-wider font-bold mb-1">Patient Ref</p>
-                  <p className="text-sm font-medium text-white">{selectedOrder.patient_ref || 'N/A'}</p>
+                  <p className="text-sm font-medium text-slate-900">{selectedOrder.patient_ref || 'N/A'}</p>
                 </div>
               </div>
               
               <div className="grid grid-cols-2 gap-4">
-                <div className="bg-black/20 p-4 rounded-xl border border-white/5">
+                <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
                   <p className="text-xs text-gray-500 uppercase tracking-wider font-bold mb-1">Material</p>
-                  <p className="text-sm font-medium text-white">{selectedOrder.material || 'N/A'}</p>
+                  <p className="text-sm font-medium text-slate-900">{selectedOrder.material || 'N/A'}</p>
                 </div>
-                <div className="bg-black/20 p-4 rounded-xl border border-white/5">
+                <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
                   <p className="text-xs text-gray-500 uppercase tracking-wider font-bold mb-1">Shade</p>
-                  <p className="text-sm font-medium text-white">{selectedOrder.shade || 'N/A'}</p>
+                  <p className="text-sm font-medium text-slate-900">{selectedOrder.shade || 'N/A'}</p>
                 </div>
               </div>
 
-              <div className="bg-black/20 p-4 rounded-xl border border-white/5">
+              <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
                 <p className="text-xs text-gray-500 uppercase tracking-wider font-bold mb-1">Teeth Selected</p>
                 <div className="flex flex-wrap gap-2 mt-2">
                   {selectedOrder.teeth && selectedOrder.teeth.length > 0 ? (
                     selectedOrder.teeth.map((t: number) => (
-                      <span key={t} className="px-3 py-1 bg-primary-500/10 border border-primary-500/20 text-primary-400 rounded-md text-xs font-bold">
+                      <span key={t} className="px-3 py-1 bg-primary-50 text-primary-700 border border-primary-200 rounded-md text-xs font-bold">
                         {t}
                       </span>
                     ))
                   ) : (
-                    <span className="text-sm text-gray-400">None</span>
+                    <span className="text-sm text-slate-500">None</span>
                   )}
                 </div>
               </div>
               
               <div className="grid grid-cols-2 gap-4">
-                <div className="bg-black/20 p-4 rounded-xl border border-white/5">
+                <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
                   <p className="text-xs text-gray-500 uppercase tracking-wider font-bold mb-1">Delivery Method</p>
-                  <p className="text-sm font-medium text-white">{selectedOrder.delivery_method || 'N/A'}</p>
+                  <p className="text-sm font-medium text-slate-900">{selectedOrder.delivery_method || 'N/A'}</p>
                 </div>
-                <div className="bg-black/20 p-4 rounded-xl border border-white/5">
+                <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
                   <p className="text-xs text-gray-500 uppercase tracking-wider font-bold mb-1">Additional Notes</p>
-                  <p className="text-sm font-medium text-white whitespace-pre-wrap">{selectedOrder.notes || 'None'}</p>
+                  <p className="text-sm font-medium text-slate-900 whitespace-pre-wrap">{selectedOrder.notes || 'None'}</p>
                 </div>
               </div>
             </div>
@@ -507,15 +507,15 @@ export default function AdminClients() {
       {clientToDelete && (
         <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setClientToDelete(null)}></div>
-          <div className="relative bg-surface-card border border-white/10 rounded-2xl p-6 w-full max-w-md shadow-2xl animate-in fade-in zoom-in-95 duration-200">
-            <h3 className="text-xl font-bold text-white mb-2">Suspend Client?</h3>
-            <p className="text-gray-400 text-sm mb-6">
+          <div className="relative bg-white border border-slate-200 rounded-2xl p-6 w-full max-w-md shadow-2xl animate-in fade-in zoom-in-95 duration-200">
+            <h3 className="text-xl font-bold text-slate-900 mb-2">Suspend Client?</h3>
+            <p className="text-slate-500 text-sm mb-6">
               Are you sure you want to suspend <strong>{clientToDelete.business_name}</strong>? They will immediately lose access to their dashboard.
             </p>
             <div className="flex gap-3">
               <button 
                 onClick={() => setClientToDelete(null)}
-                className="flex-1 px-4 py-2 bg-surface-dark border border-white/10 text-white rounded-xl text-sm font-medium hover:bg-white/5 transition-colors"
+                className="flex-1 px-4 py-2 bg-slate-100 border border-slate-200 text-slate-700 rounded-xl text-sm font-medium hover:bg-slate-200 transition-colors cursor-pointer"
               >
                 Cancel
               </button>
