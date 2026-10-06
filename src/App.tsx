@@ -1,4 +1,6 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { supabase } from './lib/supabase';
 import { HelmetProvider } from 'react-helmet-async';
 import ScrollToTop from './components/ScrollToTop';
 import { Toaster } from 'react-hot-toast';
@@ -20,14 +22,59 @@ import Gallery from './pages/public/Gallery';
 
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
-  // Temporarily bypassing security so you can view the dashboard 
-  // without fighting the Supabase email rate limit or auth errors!
+  const [loading, setLoading] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [status, setStatus] = useState<string | null>(null);
+
+  useEffect(() => {
+    checkAuth();
+  }, []);
+
+  const checkAuth = async () => {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) {
+      setLoading(false);
+      return;
+    }
+    
+    setIsAuthenticated(true);
+    
+    const { data } = await supabase.from('profiles').select('status').eq('id', session.user.id).single();
+    if (data) {
+      setStatus(data.status);
+    }
+    setLoading(false);
+  };
+
+  if (loading) return <div className="min-h-screen flex items-center justify-center bg-slate-50"><div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div></div>;
+  if (!isAuthenticated) return <Navigate to="/login" replace />;
+  if (status === 'pending') return <Navigate to="/pending-approval" replace />;
+  
   return <>{children}</>;
 }
 
 function AdminRoute({ children }: { children: React.ReactNode }) {
-  // Temporarily bypassing security so you can view the dashboard 
-  // without fighting the Supabase email rate limit!
+  const [loading, setLoading] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    checkAuth();
+  }, []);
+
+  const checkAuth = async () => {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (session && session.user.email) {
+      const email = session.user.email.toLowerCase();
+      if (email === 'info@precisiondental.ie' || email === 'pmg000@hotmail.com') {
+        setIsAdmin(true);
+      }
+    }
+    setLoading(false);
+  };
+
+  if (loading) return <div className="min-h-screen flex items-center justify-center bg-slate-50"><div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div></div>;
+  if (!isAdmin) return <Navigate to="/login" replace />;
+  
   return <>{children}</>;
 }
 
