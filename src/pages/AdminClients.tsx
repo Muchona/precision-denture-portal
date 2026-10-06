@@ -175,7 +175,7 @@ export default function AdminClients() {
                 </div>
 
                 {client.status === 'pending' && (
-                  <div className="flex gap-3 mt-auto pt-4 border-t border-white/5 relative z-20">
+                  <div className="flex gap-3 mt-auto pt-4 border-t border-slate-200 relative z-20">
                     <button 
                       onClick={(e) => handleApprove(client.id, e)}
                       className="flex-1 flex items-center justify-center gap-2 py-2 bg-green-500/20 hover:bg-green-500/30 text-green-400 rounded-xl text-sm font-bold transition-colors border border-green-500/30"
@@ -224,17 +224,17 @@ export default function AdminClients() {
           ></div>
           
           {/* Panel */}
-          <div className="relative w-full max-w-2xl bg-surface-dark h-full shadow-2xl border-l border-white/10 flex flex-col transform transition-transform duration-300 ease-in-out translate-x-0 overflow-y-auto">
+          <div className="relative w-full max-w-2xl bg-white h-full shadow-2xl border-l border-slate-200 flex flex-col transform transition-transform duration-300 ease-in-out translate-x-0 overflow-y-auto">
             
             {/* Header */}
-            <div className="sticky top-0 z-20 bg-surface-dark px-8 py-6 border-b border-white/10 flex items-center justify-between">
+            <div className="sticky top-0 z-20 bg-white px-8 py-6 border-b border-slate-200 flex items-center justify-between">
               <div>
-                <h2 className="text-2xl font-bold text-white mb-1">{selectedClient.business_name || 'Unnamed Clinic'}</h2>
-                <p className="text-gray-400 text-sm">Client ID: {selectedClient.id.substring(0,8)}</p>
+                <h2 className="text-2xl font-bold text-slate-800 mb-1">{selectedClient.business_name || 'Unnamed Clinic'}</h2>
+                <p className="text-slate-500 text-sm">Client ID: {selectedClient.id.substring(0,8)}</p>
               </div>
               <button 
                 onClick={() => setSelectedClient(null)}
-                className="w-10 h-10 bg-white/5 hover:bg-white/10 rounded-full flex items-center justify-center text-white transition-colors"
+                className="w-10 h-10 bg-slate-100 hover:bg-slate-200 rounded-full flex items-center justify-center text-slate-500 transition-colors"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -245,13 +245,13 @@ export default function AdminClients() {
               {/* Profile Details Section */}
               <section>
                 <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-xl font-bold text-white flex items-center gap-2">
+                  <h3 className="text-xl font-bold text-slate-800 flex items-center gap-2">
                     <Building className="w-5 h-5 text-primary-500" /> Clinic Profile
                   </h3>
                   {!isEditing ? (
                     <button 
                       onClick={() => setIsEditing(true)}
-                      className="px-4 py-2 bg-white/5 hover:bg-white/10 text-white rounded-lg text-sm font-medium transition-colors flex items-center gap-2"
+                      className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-sm font-medium transition-colors flex items-center gap-2"
                     >
                       <Edit2 className="w-4 h-4" /> Edit Profile
                     </button>
@@ -262,7 +262,7 @@ export default function AdminClients() {
                           setIsEditing(false);
                           setEditForm(selectedClient);
                         }}
-                        className="px-4 py-2 bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white rounded-lg text-sm font-medium transition-colors"
+                        className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 hover:text-slate-800 rounded-lg text-sm font-medium transition-colors"
                       >
                         Cancel
                       </button>
@@ -277,15 +277,15 @@ export default function AdminClients() {
                   )}
                 </div>
 
-                <div className="bg-black/20 p-6 rounded-2xl border border-white/5">
+                <div className="bg-slate-50 p-6 rounded-2xl border border-slate-200">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     {/* Form Fields */}
                     <div className="space-y-1">
                       <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">Business Name</label>
                       {isEditing ? (
-                        <input type="text" value={editForm.business_name || ''} onChange={e => setEditForm({...editForm, business_name: e.target.value})} className="w-full bg-surface-dark border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:border-primary-500 focus:outline-none" />
+                        <input type="text" value={editForm.business_name || ''} onChange={e => setEditForm({...editForm, business_name: e.target.value})} className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-800 text-sm focus:border-primary-500 focus:outline-none" />
                       ) : (
-                        <p className="text-white font-medium">{selectedClient.business_name || '-'}</p>
+                        <p className="text-slate-800 font-medium">{selectedClient.business_name || '-'}</p>
                       )}
                     </div>
 
@@ -293,20 +293,20 @@ export default function AdminClients() {
                       <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">Contact Person</label>
                       {isEditing ? (
                         <div className="flex gap-2">
-                          <input type="text" placeholder="First" value={editForm.first_name || ''} onChange={e => setEditForm({...editForm, first_name: e.target.value})} className="w-1/2 bg-surface-dark border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:border-primary-500 focus:outline-none" />
-                          <input type="text" placeholder="Last" value={editForm.last_name || ''} onChange={e => setEditForm({...editForm, last_name: e.target.value})} className="w-1/2 bg-surface-dark border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:border-primary-500 focus:outline-none" />
+                          <input type="text" placeholder="First" value={editForm.first_name || ''} onChange={e => setEditForm({...editForm, first_name: e.target.value})} className="w-1/2 bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-800 text-sm focus:border-primary-500 focus:outline-none" />
+                          <input type="text" placeholder="Last" value={editForm.last_name || ''} onChange={e => setEditForm({...editForm, last_name: e.target.value})} className="w-1/2 bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-800 text-sm focus:border-primary-500 focus:outline-none" />
                         </div>
                       ) : (
-                        <p className="text-white font-medium flex items-center gap-2"><UserIcon className="w-4 h-4 text-gray-400" /> {selectedClient.first_name} {selectedClient.last_name}</p>
+                        <p className="text-slate-800 font-medium flex items-center gap-2"><UserIcon className="w-4 h-4 text-gray-400" /> {selectedClient.first_name} {selectedClient.last_name}</p>
                       )}
                     </div>
 
                     <div className="space-y-1">
                       <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">Phone</label>
                       {isEditing ? (
-                        <input type="text" value={editForm.phone || ''} onChange={e => setEditForm({...editForm, phone: e.target.value})} className="w-full bg-surface-dark border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:border-primary-500 focus:outline-none" />
+                        <input type="text" value={editForm.phone || ''} onChange={e => setEditForm({...editForm, phone: e.target.value})} className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-800 text-sm focus:border-primary-500 focus:outline-none" />
                       ) : (
-                        <p className="text-white font-medium flex items-center gap-2"><Phone className="w-4 h-4 text-gray-400" /> {selectedClient.phone || '-'}</p>
+                        <p className="text-slate-800 font-medium flex items-center gap-2"><Phone className="w-4 h-4 text-gray-400" /> {selectedClient.phone || '-'}</p>
                       )}
                     </div>
                     
@@ -329,39 +329,39 @@ export default function AdminClients() {
                       </div>
                     </div>
 
-                    <div className="space-y-1 sm:col-span-2 pt-4 border-t border-white/5">
+                    <div className="space-y-1 sm:col-span-2 pt-4 border-t border-slate-200">
                       <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">Street Address</label>
                       {isEditing ? (
-                        <input type="text" value={editForm.address_line1 || ''} onChange={e => setEditForm({...editForm, address_line1: e.target.value})} className="w-full bg-surface-dark border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:border-primary-500 focus:outline-none" />
+                        <input type="text" value={editForm.address_line1 || ''} onChange={e => setEditForm({...editForm, address_line1: e.target.value})} className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-800 text-sm focus:border-primary-500 focus:outline-none" />
                       ) : (
-                        <p className="text-white font-medium flex items-center gap-2"><MapPin className="w-4 h-4 text-gray-400" /> {selectedClient.address_line1 || 'No address provided'}</p>
+                        <p className="text-slate-800 font-medium flex items-center gap-2"><MapPin className="w-4 h-4 text-gray-400" /> {selectedClient.address_line1 || 'No address provided'}</p>
                       )}
                     </div>
 
                     <div className="space-y-1">
                       <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">City / County</label>
                       {isEditing ? (
-                        <input type="text" value={editForm.city || ''} onChange={e => setEditForm({...editForm, city: e.target.value})} className="w-full bg-surface-dark border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:border-primary-500 focus:outline-none" />
+                        <input type="text" value={editForm.city || ''} onChange={e => setEditForm({...editForm, city: e.target.value})} className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-800 text-sm focus:border-primary-500 focus:outline-none" />
                       ) : (
-                        <p className="text-white font-medium">{selectedClient.city || '-'}</p>
+                        <p className="text-slate-800 font-medium">{selectedClient.city || '-'}</p>
                       )}
                     </div>
 
                     <div className="space-y-1">
                       <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">Eircode</label>
                       {isEditing ? (
-                        <input type="text" value={editForm.postal_code || ''} onChange={e => setEditForm({...editForm, postal_code: e.target.value})} className="w-full bg-surface-dark border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:border-primary-500 focus:outline-none" />
+                        <input type="text" value={editForm.postal_code || ''} onChange={e => setEditForm({...editForm, postal_code: e.target.value})} className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-800 text-sm focus:border-primary-500 focus:outline-none" />
                       ) : (
-                        <p className="text-white font-medium">{selectedClient.postal_code || '-'}</p>
+                        <p className="text-slate-800 font-medium">{selectedClient.postal_code || '-'}</p>
                       )}
                     </div>
 
                     <div className="space-y-1 sm:col-span-2">
                       <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">VAT Number</label>
                       {isEditing ? (
-                        <input type="text" value={editForm.vat_number || ''} onChange={e => setEditForm({...editForm, vat_number: e.target.value})} className="w-full bg-surface-dark border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:border-primary-500 focus:outline-none" />
+                        <input type="text" value={editForm.vat_number || ''} onChange={e => setEditForm({...editForm, vat_number: e.target.value})} className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-800 text-sm focus:border-primary-500 focus:outline-none" />
                       ) : (
-                        <p className="text-white font-medium flex items-center gap-2"><CreditCard className="w-4 h-4 text-gray-400" /> {selectedClient.vat_number || 'No VAT provided'}</p>
+                        <p className="text-slate-800 font-medium flex items-center gap-2"><CreditCard className="w-4 h-4 text-gray-400" /> {selectedClient.vat_number || 'No VAT provided'}</p>
                       )}
                     </div>
 
@@ -372,10 +372,10 @@ export default function AdminClients() {
               {/* Order History Section */}
               <section>
                 <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-xl font-bold text-white flex items-center gap-2">
+                  <h3 className="text-xl font-bold text-slate-800 flex items-center gap-2">
                     <Package className="w-5 h-5 text-primary-500" /> Order History
                   </h3>
-                  <div className="px-3 py-1 bg-white/5 rounded-lg text-sm text-gray-400 font-medium">
+                  <div className="px-3 py-1 bg-slate-100 rounded-lg text-sm text-slate-500 font-medium">
                     {clientOrders.length} Orders
                   </div>
                 </div>
@@ -384,20 +384,20 @@ export default function AdminClients() {
                   {isLoadingOrders ? (
                     <div className="py-8 text-center text-gray-500 text-sm">Loading orders...</div>
                   ) : clientOrders.length === 0 ? (
-                    <div className="py-12 bg-black/20 rounded-2xl border border-white/5 flex flex-col items-center justify-center text-center">
+                    <div className="py-12 bg-slate-50 rounded-2xl border border-slate-200 flex flex-col items-center justify-center text-center">
                       <Package className="w-12 h-12 text-gray-600 mb-4" />
                       <p className="text-gray-400">This client hasn't placed any orders yet.</p>
                     </div>
                   ) : (
                     clientOrders.map(order => (
-                      <div key={order.id} className="bg-surface-dark border border-white/10 rounded-xl p-4 flex items-center justify-between hover:bg-white/5 transition-colors cursor-pointer group">
+                      <div key={order.id} className="bg-white border border-slate-200 rounded-xl p-4 flex items-center justify-between hover:bg-slate-50 transition-colors cursor-pointer group">
                         <div className="flex items-center gap-4">
-                          <div className="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center border border-white/10">
+                          <div className="w-10 h-10 bg-slate-50 rounded-lg flex items-center justify-center border border-slate-200">
                             <Hash className="w-5 h-5 text-gray-400" />
                           </div>
                           <div>
                             <div className="flex items-center gap-2">
-                              <h4 className="text-white font-medium">Ref: {order.patient_reference}</h4>
+                              <h4 className="text-slate-800 font-medium">Ref: {order.patient_reference}</h4>
                               <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider ${
                                 order.status === 'completed' ? 'bg-green-500/10 text-green-400 border border-green-500/20' :
                                 order.status === 'in_progress' ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20' :
@@ -491,7 +491,7 @@ export default function AdminClients() {
               </div>
             </div>
             
-            <div className="mt-8 pt-6 border-t border-white/5 flex justify-end">
+            <div className="mt-8 pt-6 border-t border-slate-200 flex justify-end">
               <button 
                 onClick={() => setSelectedOrder(null)}
                 className="px-6 py-2.5 bg-primary-600 hover:bg-primary-500 text-white font-bold rounded-xl transition-all shadow-[0_0_15px_rgba(34,197,94,0.3)] hover:shadow-[0_0_25px_rgba(34,197,94,0.5)] cursor-pointer"
