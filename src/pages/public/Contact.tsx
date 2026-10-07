@@ -13,7 +13,7 @@ export default function Contact() {
     setIsSubmitting(true);
     
     const formData = new FormData(e.currentTarget);
-    const object = Object.fromEntries(formData);
+    const object = Object.fromEntries(formData as any);
     const json = JSON.stringify(object);
 
     try {
