@@ -52,6 +52,25 @@ export default function Login() {
 
         if (signUpError) throw signUpError;
         
+        // Send Email Notification to Admin for New Registration
+        try {
+          await fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+              access_key: "151cd373-85c6-4275-be6c-0aa913d84551",
+              subject: `New Clinic Registration - ${businessName}`,
+              from_name: "Precision Dental Portal",
+              message: `A new clinic has registered for the portal and is awaiting approval.\n\nClinic: ${businessName}\nContact: ${firstName} ${lastName}\nRole: ${jobRole}\nPhone: ${phone}\nEmail: ${email}\n\nPlease log in to the admin portal to approve or reject this client.`
+            })
+          });
+        } catch (emailError) {
+          console.error("Failed to send admin notification", emailError);
+        }
+
         setMessage('Registration successful! Please check your email for the confirmation link.');
         setPassword('');
         setConfirmPassword('');

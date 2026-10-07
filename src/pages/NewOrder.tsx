@@ -137,7 +137,7 @@ export default function NewOrder() {
             'Accept': 'application/json'
           },
           body: JSON.stringify({
-            access_key: "e1b2d3f1-a2ba-419c-a9a3-63e10bc4e201",
+            access_key: "151cd373-85c6-4275-be6c-0aa913d84551",
             subject: `New Order Received - ${companyName}`,
             from_name: "Precision Dental Portal",
             message: `A new order has been placed by ${contactName} (${companyName}).\n\nPatient Ref: ${patientRef}\nMaterial: ${selectedMaterial}\nShade: ${selectedShade || 'N/A'}\nTeeth: ${selectedTeeth.length > 0 ? selectedTeeth.join(', ') : 'N/A'}\nDelivery: ${selectedDelivery}\nNotes: ${notes || 'None'}\n\nPlease log in to the admin portal for full details and to download the CAM files.`
