@@ -107,16 +107,16 @@ export default function Gallery() {
       </section>
 
       {/* Gallery Grid */}
-      <section className="py-16 lg:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-8 sm:py-16 lg:py-24">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          <div className="grid grid-cols-3 gap-2.5 sm:gap-6 md:gap-8">
             {galleryItems.map((item, index) => (
-              <FadeIn key={item.title} delay={index * 0.05} direction="up">
+              <FadeIn key={item.title} delay={index * 0.04} direction="up">
                 <motion.div 
                   style={{ skewY, scale }}
                   onClick={() => setActiveImage(item)}
-                  className="group relative aspect-[4/3] bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden cursor-pointer transition-all duration-300 hover:shadow-xl hover:border-primary-300"
+                  className="group relative aspect-square sm:aspect-[4/3] bg-white rounded-xl sm:rounded-2xl shadow-sm border border-slate-200 overflow-hidden cursor-pointer transition-all duration-300 hover:shadow-xl hover:border-primary-300"
                 >
                   <img 
                     src={item.src} 
@@ -124,22 +124,22 @@ export default function Gallery() {
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     loading="lazy"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/25 to-transparent opacity-75 sm:opacity-80 group-hover:opacity-95 transition-opacity"></div>
                   
-                  <div className="absolute inset-0 p-5 flex flex-col justify-end text-white">
-                    <span className="text-xs font-semibold uppercase tracking-wider text-sky-300 mb-1">
+                  <div className="absolute inset-0 p-2 sm:p-5 flex flex-col justify-end text-white">
+                    <span className="hidden sm:inline text-xs font-semibold uppercase tracking-wider text-sky-300 mb-1">
                       {item.category}
                     </span>
-                    <h3 className="text-lg font-bold text-white mb-1 leading-snug">
+                    <h3 className="text-xs sm:text-lg font-bold text-white mb-0.5 sm:mb-1 leading-tight line-clamp-1 sm:line-clamp-none">
                       {item.title}
                     </h3>
-                    <p className="text-xs text-slate-300 line-clamp-2 leading-relaxed">
+                    <p className="hidden sm:block text-xs text-slate-300 line-clamp-2 leading-relaxed">
                       {item.description}
                     </p>
                   </div>
 
-                  <div className="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                    <ZoomIn className="w-4 h-4 text-white" />
+                  <div className="absolute top-2 right-2 sm:top-4 sm:right-4 w-6 h-6 sm:w-9 sm:h-9 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                    <ZoomIn className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
                   </div>
                 </motion.div>
               </FadeIn>
