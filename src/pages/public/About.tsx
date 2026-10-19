@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, ShieldCheck, Award, Play, Pause, Maximize2, Sparkles } from 'lucide-react';
 import FadeIn from '../../components/FadeIn';
@@ -8,6 +8,12 @@ export default function About() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [isPlaying, setIsPlaying] = useState(true);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.play().catch(() => {});
+    }
+  }, []);
 
   const togglePlay = () => {
     if (videoRef.current) {
@@ -113,7 +119,7 @@ export default function About() {
               <FadeIn delay={0.2} direction="left">
                 <div 
                   ref={containerRef}
-                  className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border border-slate-200 group bg-slate-900"
+                  className="relative aspect-video rounded-3xl overflow-hidden shadow-2xl border border-slate-200 group bg-slate-900"
                 >
                   <video 
                     ref={videoRef}
@@ -121,7 +127,6 @@ export default function About() {
                     loop 
                     muted 
                     playsInline 
-                    poster="/images/gallery/ivoclar-programill-7.jpg"
                     className="w-full h-full object-cover"
                     onPlay={() => setIsPlaying(true)}
                     onPause={() => setIsPlaying(false)}
