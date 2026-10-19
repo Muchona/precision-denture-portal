@@ -15,9 +15,15 @@ export default function Footer() {
       
       if (session || mockUser) {
         setIsLoggedIn(true);
-        if (mockUser === 'admin') {
-          setIsAdmin(true);
-        } else if (session?.user?.email === 'info@precisiondental.ie' || session?.user?.email === 'pmg000@hotmail.com') {
+        const adminEmails = [
+          'info@precisiondental.ie',
+          'pmg000@hotmail.com',
+          'info@monaghandentureclinic.com',
+          'precisiondental.ie@gmail.com',
+          'mucho055@gmail.com',
+          'muchona055@gmail.com'
+        ];
+        if (mockUser === 'admin' || (session?.user?.email && adminEmails.includes(session.user.email.toLowerCase()))) {
           setIsAdmin(true);
         }
       }

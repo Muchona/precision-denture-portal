@@ -4,26 +4,26 @@ import SEO from '../../components/SEO';
 
 export default function Products() {
   const milledPMMA = [
-    { name: 'Oversized milled digital denture', price: '€150 per denture', description: 'Oversize Process: The denture base and denture teeth are separately milled but not final milled. This allows the teeth to be bonded to the base and returned to the mill for final milling. The final mill precisely removes excess bonding material and finishes the milling process.' },
+    { name: 'Oversized milled digital denture', price: '€160 per denture', description: 'Oversize Process: The denture base and denture teeth are separately milled but not final milled. This allows the teeth to be bonded to the base and returned to the mill for final milling. The final mill precisely removes excess bonding material and finishes the milling process.' },
     { name: 'Ivoclar Oversized Milled Denture', price: '€280 per denture' },
     { name: 'Vita Vionic Digital Denture', price: '€300 per denture' },
     { name: 'Ivoclar Ivotion Milled Denture', price: '€240 per denture', description: 'The Ivotion disc contains both the tooth and base in one disc. The disc is placed in the mill to conduct one uninterrupted milling process.' },
     { name: 'Milled Denture Base only', price: '€80' },
     { name: 'Milled Tooth Arch only', price: '€40' },
     { name: 'Milled Acrylic Bitesplint', price: '€100' },
-    { name: 'Acetal Framework', price: '€120' },
-    { name: 'Acetal Clasps', price: '€20 per clasp' },
-    { name: 'Temporary PMMA Restoration', price: '€20 per unit' }
+    { name: 'Acetal Framework', price: '€140' },
+    { name: 'Acetal Clasps', price: '€25 per clasp' },
+    { name: 'Temporary PMMA Restoration', price: '€25 per unit' }
   ];
 
   const zirconia = [
-    { name: 'IPS e.max monolithic', price: '€35' },
-    { name: 'IPS e.max Prime', price: '€40' },
-    { name: 'IPS e.max Prime Aesthetic', price: '€40' },
-    { name: 'Argen Ultra', price: '€30' },
+    { name: 'IPS e.max monolithic', price: '€45' },
+    { name: 'IPS e.max Prime', price: '€55' },
+    { name: 'IPS e.max Prime Aesthetic', price: '€55' },
+    { name: 'Argen Ultra', price: '€35' },
     { name: 'Argen HT+', price: '€35' },
-    { name: 'Argen HT+ Multilayer', price: '€40' },
-    { name: 'Katana YML', price: '€40' }
+    { name: 'Argen HT+ Multilayer', price: '€50' },
+    { name: 'Katana YML', price: '€60' }
   ];
 
   const lithiumDisilicate = [
@@ -33,9 +33,9 @@ export default function Products() {
 
   const printing = [
     { name: 'Tryin', price: '€50' },
-    { name: 'Custom Impression Tray', price: '€15' },
+    { name: 'Custom Impression Tray', price: '€20' },
     { name: 'Model', price: '€25' },
-    { name: 'Model Die', price: '€6 per unit' },
+    { name: 'Model Die', price: '€8 per unit' },
     { name: 'Surgical Guide', price: '€80' }
   ];
 
