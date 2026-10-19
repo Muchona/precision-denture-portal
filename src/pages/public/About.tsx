@@ -1,10 +1,38 @@
+import { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, ShieldCheck, Award } from 'lucide-react';
-import millingImage from '../../assets/milling-machine.jpg';
+import { ArrowRight, ShieldCheck, Award, Play, Pause, Maximize2, Sparkles } from 'lucide-react';
 import FadeIn from '../../components/FadeIn';
 import SEO from '../../components/SEO';
 
 export default function About() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isPlaying, setIsPlaying] = useState(true);
+
+  const togglePlay = () => {
+    if (videoRef.current) {
+      if (isPlaying) {
+        videoRef.current.pause();
+        setIsPlaying(false);
+      } else {
+        videoRef.current.play();
+        setIsPlaying(true);
+      }
+    }
+  };
+
+  const toggleFullscreen = () => {
+    if (containerRef.current) {
+      if (!document.fullscreenElement) {
+        containerRef.current.requestFullscreen().catch((err) => {
+          console.error(`Error attempting to enable fullscreen: ${err.message}`);
+        });
+      } else {
+        document.exitFullscreen();
+      }
+    }
+  };
+
   return (
     <div className="flex flex-col min-h-screen bg-white">
       <SEO 
@@ -80,18 +108,60 @@ export default function About() {
               </div>
             </div>
 
-            {/* High-Tech Image */}
+            {/* High-Tech Video Showcase */}
             <div className="order-1 lg:order-2">
               <FadeIn delay={0.2} direction="left">
-                <div className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border border-slate-200 group">
-                  <img 
-                    src={millingImage} 
-                    alt="State of the art dental milling machine in a modern laboratory" 
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8">
-                    <p className="text-white font-medium text-lg">World Class Milling Technology</p>
-                    <p className="text-slate-200 text-sm">Our modern laboratory setup</p>
+                <div 
+                  ref={containerRef}
+                  className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border border-slate-200 group bg-slate-900"
+                >
+                  <video 
+                    ref={videoRef}
+                    autoPlay 
+                    loop 
+                    muted 
+                    playsInline 
+                    poster="/images/gallery/ivoclar-programill-7.jpg"
+                    className="w-full h-full object-cover"
+                    onPlay={() => setIsPlaying(true)}
+                    onPause={() => setIsPlaying(false)}
+                  >
+                    <source src="/videos/ivoclar-programill-showcase.mp4" type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+
+                  {/* Floating Live Badge */}
+                  <div className="absolute top-4 left-4 z-20 flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900/80 backdrop-blur-md border border-white/20 text-white text-xs font-semibold shadow-lg pointer-events-none">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    Ivoclar PrograMill 7 in Action
+                  </div>
+
+                  {/* Interactive Play/Pause & Fullscreen Controls */}
+                  <div className="absolute top-4 right-4 z-20 flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={togglePlay}
+                      aria-label={isPlaying ? "Pause video" : "Play video"}
+                      className="p-2.5 rounded-full bg-slate-900/70 hover:bg-slate-900/95 backdrop-blur-md text-white transition-all hover:scale-105 border border-white/20 shadow-md cursor-pointer"
+                    >
+                      {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 fill-white" />}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={toggleFullscreen}
+                      aria-label="Fullscreen"
+                      className="p-2.5 rounded-full bg-slate-900/70 hover:bg-slate-900/95 backdrop-blur-md text-white transition-all hover:scale-105 border border-white/20 shadow-md cursor-pointer"
+                    >
+                      <Maximize2 className="w-4 h-4" />
+                    </button>
+                  </div>
+
+                  {/* Glassmorphic Caption Bar */}
+                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/90 via-slate-950/50 to-transparent p-6 z-20 flex flex-col justify-end pointer-events-none">
+                    <p className="text-white font-bold text-lg flex items-center gap-2">
+                      <Sparkles className="w-4 h-4 text-sky-400" /> World Class Milling Technology
+                    </p>
+                    <p className="text-slate-300 text-sm mt-0.5">Ireland's premier 5-axis digital dental fabrication</p>
                   </div>
                 </div>
               </FadeIn>
