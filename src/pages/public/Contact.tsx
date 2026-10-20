@@ -164,7 +164,7 @@ export default function Contact() {
                 <>
                   <h3 className="text-2xl font-bold text-slate-900 mb-6">Send us a message</h3>
                   <form onSubmit={handleSubmit} className="space-y-6">
-                    <input type="hidden" name="access_key" value="151cd373-85c6-4275-be6c-0aa913d84551" />
+                    <input type="hidden" name="access_key" value="029b3aff-9000-46f5-aa65-607b939496e9" />
                     <input type="hidden" name="subject" value="New Contact Form Submission - Precision Dental" />
                     <input type="hidden" name="from_name" value="Precision Dental Portal" />
                     
