@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import logo from '../assets/logo.png';
-import { Mail, Lock, ArrowRight, User, Building, Briefcase, Phone, Eye, EyeOff } from 'lucide-react';
+import { Mail, Lock, ArrowRight, User, Building, Briefcase, Phone, Eye, EyeOff, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 
 export default function Login() {
   const [isSignUp, setIsSignUp] = useState(false);
+  const [isForgotPassword, setIsForgotPassword] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   
@@ -31,13 +32,28 @@ export default function Login() {
     setMessage(null);
 
     try {
+      if (isForgotPassword) {
+        if (!email.trim()) {
+          throw new Error('Please enter your email address.');
+        }
+
+        const { error: resetError } = await supabase.auth.resetPasswordForEmail(email.trim(), {
+          redirectTo: `${window.location.origin}/reset-password`,
+        });
+
+        if (resetError) throw resetError;
+
+        setMessage('Password reset instructions have been sent to your email! Please check your inbox (and spam folder).');
+        return;
+      }
+
       if (isSignUp) {
         if (password !== confirmPassword) {
           throw new Error("Passwords do not match");
         }
         
-        const { error: signUpError } = await supabase.auth.signUp({
-          email,
+        const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
+          email: email.trim(),
           password,
           options: {
             data: {
@@ -51,6 +67,11 @@ export default function Login() {
         });
 
         if (signUpError) throw signUpError;
+
+        // Supabase returns empty identities array if user with this email already exists
+        if (signUpData?.user && (!signUpData.user.identities || signUpData.user.identities.length === 0)) {
+          throw new Error("An account with this email address already exists. Please sign in or click 'Forgot password'.");
+        }
         
         // Send Email Notification to Admin for New Registration
         try {
@@ -64,19 +85,19 @@ export default function Login() {
               access_key: "151cd373-85c6-4275-be6c-0aa913d84551",
               subject: `New Clinic Registration - ${businessName}`,
               from_name: "Precision Dental Portal",
-              message: `A new clinic has registered for the portal and is awaiting approval.\n\nClinic: ${businessName}\nContact: ${firstName} ${lastName}\nRole: ${jobRole}\nPhone: ${phone}\nEmail: ${email}\n\nPlease log in to the admin portal to approve or reject this client.`
+              message: `A new clinic has registered for the portal and is awaiting approval.\n\nClinic: ${businessName}\nContact: ${firstName} ${lastName}\nRole: ${jobRole}\nPhone: ${phone}\nEmail: ${email}\n\nPlease log in to the admin portal to approve or reject this client:\nhttps://precision-denture-portal.vercel.app/admin/clients`
             })
           });
         } catch (emailError) {
           console.error("Failed to send admin notification", emailError);
         }
 
-        setMessage('Registration successful! Please check your email for the confirmation link.');
+        setMessage('Registration request submitted! Please check your email for the verification link. The lab has also been notified to approve your account.');
         setPassword('');
         setConfirmPassword('');
       } else {
         const { error: signInError } = await supabase.auth.signInWithPassword({
-          email,
+          email: email.trim(),
           password,
         });
 
@@ -105,12 +126,25 @@ export default function Login() {
     }
   };
 
-  const resetForm = () => {
-    setIsSignUp(!isSignUp);
+  const switchToSignUp = () => {
+    setIsSignUp(true);
+    setIsForgotPassword(false);
     setError(null);
     setMessage(null);
-    setPassword('');
-    setConfirmPassword('');
+  };
+
+  const switchToSignIn = () => {
+    setIsSignUp(false);
+    setIsForgotPassword(false);
+    setError(null);
+    setMessage(null);
+  };
+
+  const switchToForgotPassword = () => {
+    setIsForgotPassword(true);
+    setIsSignUp(false);
+    setError(null);
+    setMessage(null);
   };
 
   return (
@@ -130,12 +164,18 @@ export default function Login() {
         </div>
       </div>
 
-      {/* Right Panel - Login Form */}
+      {/* Right Panel - Auth Form */}
       <div className="w-full lg:w-1/2 flex items-center justify-center p-8 sm:p-12">
         <div className={`w-full ${isSignUp ? 'max-w-2xl' : 'max-w-md'} bg-white shadow-xl border border-slate-100 p-8 rounded-3xl transition-all duration-500`}>
           <div className="mb-10 text-center lg:text-left">
-            <h2 className="text-3xl font-bold text-slate-900 mb-2">{isSignUp ? 'Create Account' : 'Welcome Back'}</h2>
-            <p className="text-slate-500">{isSignUp ? 'Register your clinic for access' : 'Sign in to access your dashboard'}</p>
+            <h2 className="text-3xl font-bold text-slate-900 mb-2">
+              {isForgotPassword ? 'Reset Password' : (isSignUp ? 'Create Account' : 'Welcome Back')}
+            </h2>
+            <p className="text-slate-500">
+              {isForgotPassword
+                ? 'Enter your email to receive password reset instructions'
+                : (isSignUp ? 'Register your clinic for access' : 'Sign in to access your dashboard')}
+            </p>
           </div>
 
           <form onSubmit={handleAuth} className="space-y-6">
@@ -150,7 +190,27 @@ export default function Login() {
               </div>
             )}
 
-            {isSignUp ? (
+            {isForgotPassword ? (
+              // Forgot Password View
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-slate-600">Registered Email Address</label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                      <Mail className="h-5 w-5 text-slate-400" />
+                    </div>
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="w-full pl-11 pr-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary-500/50"
+                      placeholder="doctor@clinic.com"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+            ) : isSignUp ? (
               // Sign Up Form Fields (Grid Layout)
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
@@ -248,7 +308,13 @@ export default function Login() {
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <label className="text-sm font-medium text-slate-600">Password</label>
-                    <a href="#" className="text-sm text-primary-600 hover:text-primary-500 transition-colors">Forgot password?</a>
+                    <button
+                      type="button"
+                      onClick={switchToForgotPassword}
+                      className="text-sm text-primary-600 hover:text-primary-500 font-medium transition-colors cursor-pointer"
+                    >
+                      Forgot password?
+                    </button>
                   </div>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
@@ -268,22 +334,38 @@ export default function Login() {
               disabled={loading}
               className={`w-full flex items-center justify-center gap-2 py-3 px-4 bg-primary-600 hover:bg-primary-500 text-white font-medium rounded-xl transition-all duration-300 transform hover:-translate-y-0.5 shadow-lg shadow-primary-500/30 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none ${isSignUp ? 'mt-8' : ''}`}
             >
-              {loading ? (isSignUp ? 'Registering...' : 'Signing In...') : (isSignUp ? 'Register' : 'Sign In')}
+              {loading
+                ? (isForgotPassword ? 'Sending Link...' : (isSignUp ? 'Registering...' : 'Signing In...'))
+                : (isForgotPassword ? 'Send Reset Instructions' : (isSignUp ? 'Register' : 'Sign In'))}
               <ArrowRight className="w-5 h-5" />
             </button>
           </form>
 
-          <div className="mt-8 text-center">
-            <p className="text-slate-500 text-sm">
-              {isSignUp ? 'Already have an account?' : "Don't have an account?"}{' '}
-              <button 
-                onClick={resetForm} 
-                className="text-primary-600 font-medium hover:text-primary-500 transition-colors"
+          {isForgotPassword ? (
+            <div className="mt-8 text-center">
+              <button
+                type="button"
+                onClick={switchToSignIn}
+                className="inline-flex items-center gap-2 text-primary-600 font-medium hover:text-primary-500 transition-colors cursor-pointer text-sm"
               >
-                {isSignUp ? 'Sign In' : 'Request Access'}
+                <ArrowLeft className="w-4 h-4" />
+                Back to Sign In
               </button>
-            </p>
-          </div>
+            </div>
+          ) : (
+            <div className="mt-8 text-center">
+              <p className="text-slate-500 text-sm">
+                {isSignUp ? 'Already have an account?' : "Don't have an account?"}{' '}
+                <button 
+                  type="button"
+                  onClick={isSignUp ? switchToSignIn : switchToSignUp} 
+                  className="text-primary-600 font-medium hover:text-primary-500 transition-colors cursor-pointer"
+                >
+                  {isSignUp ? 'Sign In' : 'Request Access'}
+                </button>
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </div>

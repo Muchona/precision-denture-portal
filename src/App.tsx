@@ -19,6 +19,7 @@ import About from './pages/public/About';
 import Products from './pages/public/Products';
 import Contact from './pages/public/Contact';
 import Gallery from './pages/public/Gallery';
+import ResetPassword from './pages/ResetPassword';
 
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -108,6 +109,7 @@ function App() {
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
         </Route>
         
         {/* Admin Routes */}
