@@ -85,7 +85,7 @@ export default function Login() {
               access_key: "029b3aff-9000-46f5-aa65-607b939496e9",
               subject: `New Clinic Registration - ${businessName}`,
               from_name: "Precision Dental Portal",
-              message: `A new clinic has registered for the portal and is awaiting approval.\n\nClinic: ${businessName}\nContact: ${firstName} ${lastName}\nRole: ${jobRole}\nPhone: ${phone}\nEmail: ${email}\n\nPlease log in to the admin portal to approve or reject this client:\nhttps://precision-denture-portal.vercel.app/admin/clients`
+              message: `A new clinic has registered for the portal and is awaiting approval.\n\nClinic: ${businessName}\nContact: ${firstName} ${lastName}\nRole: ${jobRole}\nPhone: ${phone}\nEmail: ${email}\n\nPlease log in to the admin portal to approve or reject this client:\n${window.location.origin}/admin/clients`
             })
           });
         } catch (emailError) {
