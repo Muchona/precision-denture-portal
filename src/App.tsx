@@ -76,6 +76,8 @@ function AdminRoute({ children }: { children: React.ReactNode }) {
       ];
       if (allowedAdmins.includes(email)) {
         setIsAdmin(true);
+        // Ensure database profile role is synchronized to 'admin' for Row Level Security
+        supabase.from('profiles').update({ role: 'admin' }).eq('id', session.user.id).then();
       }
     }
     setLoading(false);
